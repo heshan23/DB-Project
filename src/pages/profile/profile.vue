@@ -85,7 +85,7 @@ export default {
     height: 250px;
     padding-top: 20px;
     /* background-color: white; */
-    background-image: url("../../assets/img/backgroud.jpg");
+    background-image: url("../../assets/img/background.jpg");
     margin-top: auto;
     position: absolute;
     left: 50%;
