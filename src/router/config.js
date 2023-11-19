@@ -32,18 +32,23 @@ const options = {
       component: () => import('@/pages/exception/403'),
     },
     {
+      path:'/post',
+      name:'发帖',
+      component:()=>import('@/pages/post'),
+    },
+    {
       path: '/',
       name: '首页',
       component: TabsView,
       redirect: '/login',
       children: [
         {
-          path: 'demo',
-          name: '演示页',
+          path: 'square',
+          name: '广场',
           meta: {
             icon: 'file-ppt'
           },
-          component: () => import('@/pages/demo')
+          component: () => import('@/pages/square')
         },
         {
           path: 'parent1',
@@ -119,6 +124,14 @@ const options = {
               component: () => import('@/pages/exception/500')
             }
           ]
+        },
+        {
+          path: 'post',
+          name: '发帖',
+          meta: {
+            icon: 'file-ppt'
+          },
+          component: () => import('@/pages/post')
         },
         {
           name: '验权页面',
