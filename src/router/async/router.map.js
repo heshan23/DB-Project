@@ -45,7 +45,7 @@ const routerMap = {
     component: view.tabs
   },
   parent1: {
-    name: '帖子',
+    name: '板块',
     icon: 'dashboard',
     component: view.blank
   },
@@ -63,6 +63,18 @@ const routerMap = {
     name: '个人中心',
     path: '/profile',
     component: () => import('@/pages/profile')
-  }
+  },
+  post: {
+    name: '发帖',
+    path: '/post',
+    icon: 'edit',
+    component: () => import('@/pages/post')
+  },
+  square:{
+    name:'广场',
+    path:'/square',
+    icon:'rise',
+    component:()=>import('@/pages/square')
+  },
 }
 export default routerMap

@@ -5,7 +5,7 @@ Mock.mock(`${process.env.VUE_APP_API_BASE_URL}/routes`, 'get', () => {
   result.code = 0
   result.data = [{
     router: 'root',
-    children: ['demo',
+    children: ['square',
       {
         router: 'parent1',
         children: [
@@ -48,6 +48,7 @@ Mock.mock(`${process.env.VUE_APP_API_BASE_URL}/routes`, 'get', () => {
         router: 'exception',
         children: ['exp404', 'exp403', 'exp500'],
       },
+      'post',
       {
         router: 'demo',
         icon: 'file-ppt',
