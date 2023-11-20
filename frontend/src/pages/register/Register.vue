@@ -27,6 +27,12 @@
           </a-input>
         </a-form-item>
         <a-form-item>
+          <a-input id="email" size="large" placeholder="请输入邮箱" autocomplete=false type="email"
+            v-decorator="['email', rules.email]">
+            <a-icon slot="prefix" type="mail" />
+          </a-input>
+        </a-form-item>
+        <a-form-item>
           <a-button :loading="logging" style="width: 100%;margin-top: 24px" size="large" htmlType="submit"
             type="primary">注册</a-button>
         </a-form-item>
@@ -60,6 +66,13 @@ export default {
           rules: [
             { required: true, message: '请确认密码', whitespace: true },
             { validator: this.checkPwd2, trigger: 'blur' }
+          ],
+          trigger: 'blur',
+        },
+        email: {
+          rules: [
+            { required: true, message: '请输入邮箱', whitespace: true },
+            { type: 'email', message: '请输入正确的邮箱地址', whitespace: true }
           ],
           trigger: 'blur',
         }

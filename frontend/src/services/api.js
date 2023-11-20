@@ -5,5 +5,5 @@ const BASE_URL = process.env.VUE_APP_API_BASE_URL
 module.exports = {
   LOGIN: `${BASE_URL}/login`,
   ROUTES: `${BASE_URL}/routes`,
-  REGISTER: `${BASE_URL}/register`,
+  REGISTER: `${BASE_URL}/User/SignUp/`,
 }
