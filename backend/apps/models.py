@@ -18,10 +18,10 @@ CREATE_DATE = "DATE"
 BOARD_ID_LENGTH = 8  # CHAR 8
 
 
+# 要有id，但是id不向前端透明
 class User(models.Model):
-    user_id = models.CharField(max_length=ID_LENGTH, verbose_name="user_id", primary_key=True)
-    email = models.CharField(max_length=EMAIL_LENGTH, verbose_name="email")
     user_name = models.CharField(max_length=USER_NAME_LENGTH, verbose_name="user_name")
+    email = models.CharField(max_length=EMAIL_LENGTH, verbose_name="email")
     password = models.CharField(max_length=PASSWORD_LENGTH, verbose_name="password")
     # open_date = models.DateField(verbose_name="open_date")
     avatar = models.IntegerField()
@@ -31,13 +31,21 @@ class User(models.Model):
         verbose_name = 'user'
 
     def __str__(self):
-        return self.user_id + " " + self.user_name
+        return str(self.id) + " " + str(self.user_name)
 
 
+# django 如果在设定的时候就没有设定primary_key,那么会自动生成一个id域,可以用这个确定
+# 当然，这个id也不会显示的展示出来
 class Post(models.Model):
-    post_id = models.CharField(max_length=ID_LENGTH, verbose_name="post_id", primary_key=True)
     title = models.CharField(max_length=TITLE_SIZE, verbose_name="title")
     content = models.TextField(verbose_name="text")
     create_date = models.DateField(verbose_name="created_date")
-    user_id = models.ForeignKey(max_length=ID_LENGTH,
-                                verbose_name="user_poster_id", to=User, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(verbose_name="user_poster_id", to=User,
+                                on_delete=models.CASCADE, default=1)
+
+    class Meta:
+        db_table = "posts"
+        verbose_name = "post"
+
+    def __str__(self):
+        return str(self.id) + " " + str(self.title)
