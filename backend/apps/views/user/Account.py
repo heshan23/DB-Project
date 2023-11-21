@@ -4,7 +4,7 @@ from rest_framework.views import APIView
 from apps.models import *
 
 
-# Response默认第一个参数事data
+# Response默认第一个参数是data
 
 
 def check_user_name_exist(username):
@@ -22,15 +22,17 @@ class UserSignIn(APIView):
             user_name = str(request.data["user_name"])
             password = str(request.data["password"])
         except KeyError:
-            return Response({"reason": "keyError,请检查发送的信息是否有user_name,password"},
-                            status=422)
+            return Response(
+                {"reason": "keyError,请检查发送的信息是否有user_name,password"}, status=422
+            )
         try:
             user = User.objects.get(user_name=user_name)
         except User.DoesNotExist:
             return Response({"reason": "该用户名未被注册"}, status=404)
         if password != user.password:
             return Response({"reason": "密码错误"}, status=400)
-        return Response({"reason": "登录成功"}, status=200)
+        ret = {"user_name": user.user_name, "avatar": user.avatar, "email": user.email}
+        return Response({"reason": "登录成功", "user": ret}, status=200)
 
 
 class UserSignUp(APIView):
@@ -41,11 +43,10 @@ class UserSignUp(APIView):
             password = request.data["password"]
         except KeyError:
             return Response(
-                {"reason": "keyError,请检查发送的信息是否有email,user_name,password"},
-                status=422)
+                {"reason": "keyError,请检查发送的信息是否有email,user_name,password"}, status=422
+            )
         if check_user_name_exist(user_name):
-            return Response({"reason": "该用户名已经被注册"},
-                            status=400)
+            return Response({"reason": "该用户名已经被注册"}, status=400)
         try:
             user = User.objects.create(
                 user_name=user_name,
@@ -68,13 +69,9 @@ class EditProfile(APIView):
             new_name = request.data["new_name"]
             new_password = request.data["new_password"]
         except KeyError:
-            return Response(
-                {"reason": "keyError,请检查发送的信息"},
-                status=422)
+            return Response({"reason": "keyError,请检查发送的信息"}, status=422)
         if check_user_name_exist(new_name):
-            return Response(
-                {"reason": "该新用户名已被注册"},
-                status=400)
+            return Response({"reason": "该新用户名已被注册"}, status=400)
         try:
             user = User.objects.get(user_name=before_name)
             user.user_name = new_name
@@ -83,8 +80,7 @@ class EditProfile(APIView):
         except Exception as e:
             print(e)
             return Response({"reason": str(e)}, status=500)
-        return Response({"reason": "修改成功"},
-                        status=200)
+        return Response({"reason": "修改成功"}, status=200)
 
 
 # 展示账户界面的基本信息
@@ -94,8 +90,7 @@ class YourAccountMessage(APIView):
             print(request.GET)
             user_name = request.GET["user_name"]
         except KeyError:
-            return Response({"reason": "keyError,请检查发送的信息是否有user_id"},
-                            status=422)
+            return Response({"reason": "keyError,请检查发送的信息是否有user_id"}, status=422)
         try:
             user = User.objects.get(user_name=user_name)
             ret_data = {

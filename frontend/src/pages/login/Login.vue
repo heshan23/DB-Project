@@ -106,7 +106,7 @@ export default {
       /* 目前 permission、roles、auth 都是假数据，该部分待后端接口完成后再修改 */
       this.logging = false
       const loginRes = res.data
-      const user = loginRes.data.user
+      const user = loginRes.user
       const permissions = [{ id: 'queryForm', operation: ['add', 'edit'] }]
       const roles = [{ id: 'admin', operation: ['add', 'edit', 'delete'] }]
       this.setUser(user)
@@ -122,7 +122,7 @@ export default {
         const routesConfig = result.data.data
         loadRoutes(routesConfig)
         this.$router.push('/square')
-        this.$message.success(loginRes.message, 3)
+        this.$message.success(loginRes.reason, 3)
       })
     },
     onClose() {
