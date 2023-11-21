@@ -87,22 +87,19 @@ export default {
           this.logging = true
           const name = this.form.getFieldValue('name')
           const password = this.form.getFieldValue('password1')
+          const email = this.form.getFieldValue('email')
           //还需要检查用户名是否已存在
-          register(name, password).then(this.afterRegister)
+          register(name, password, email).then(res => {
+            if (res.code == 200) {
+              this.$message.success('注册成功！', 1)
+              this.$router.push('/login')
+            }
+          }).catch(err => {
+            this.error = err.response.status
+            this.$message.error(err.response.data.reason, 1)
+          })
         }
       })
-    },
-
-    afterRegister(res) {
-      this.logging = false
-      const registerRes = res.data
-      if (registerRes.code >= 0) {
-        this.$message.success('注册成功！', 1)
-        this.$router.push('/login')
-      } else {
-        this.error = registerRes.message
-        this.$message.error('用户名重复', 1)
-      }
     },
 
     checkPwd2(rules, value, callback) {
