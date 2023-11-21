@@ -45,6 +45,7 @@
 <script>
 import CommonLayout from '@/layouts/CommonLayout'
 import { register } from '../../services/user'
+// import Vue from 'vue'
 export default {
   name: 'Register',
   components: { CommonLayout },
@@ -87,22 +88,18 @@ export default {
           this.logging = true
           const name = this.form.getFieldValue('name')
           const password = this.form.getFieldValue('password1')
-          //还需要检查用户名是否已存在
-          register(name, password).then(this.afterRegister)
+          const email = this.form.getFieldValue('email')
+          // Vue.prototype.$message.info('注册中...', 1)
+          register(name, password, email).then(() => {
+            this.$message.success('注册成功！', 1)
+            this.$router.push('/login')
+          }).catch(err => {
+            this.$message.error(err.response.data.reason, 1).then(() => {
+              location.reload()
+            })
+          })
         }
       })
-    },
-
-    afterRegister(res) {
-      this.logging = false
-      const registerRes = res.data
-      if (registerRes.code >= 0) {
-        this.$message.success('注册成功！', 1)
-        this.$router.push('/login')
-      } else {
-        this.error = registerRes.message
-        this.$message.error('用户名重复', 1)
-      }
     },
 
     checkPwd2(rules, value, callback) {

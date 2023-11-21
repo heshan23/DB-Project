@@ -14,10 +14,11 @@ export async function login(name, password) {
   })
 }
 
-export async function register(name, password) {
+export async function register(name, password, email) {
   return request(REGISTER, METHOD.POST, {
-    name: name,
-    password: password
+    "user_name": name,
+    "password": password,
+    "email": email
   })
 }
 
