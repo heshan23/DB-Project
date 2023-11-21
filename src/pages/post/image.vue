@@ -1,6 +1,6 @@
 <template>
     <div class="clearfix">
-        <a-upload action="https://www.mocky.io/v2/5cc8019d300000980a055e76" list-type="picture-card" :file-list="fileList"
+        <a-upload action="https://a" list-type="picture-card" :file-list="fileList"
             @preview="handlePreview" @change="handleChange">
             <div v-if="fileList.length < 8">
                 <a-icon type="plus" />

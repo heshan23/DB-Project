@@ -1,7 +1,8 @@
 <template>
-  <div class="new-page" :style="`min-height: ${pageMinHeight}px`">
+  <!-- <div class="new-page" :style="`min-height: ${pageMinHeight}px`">
     <h1>{{$t('content')}}</h1>
-  </div>
+  </div> -->
+  <h1>这是demo</h1>
 </template>
 
 <script>

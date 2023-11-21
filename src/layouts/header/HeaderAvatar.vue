@@ -1,8 +1,8 @@
 <template>
   <a-dropdown>
     <div class="header-avatar" style="cursor: pointer">
-      <a-avatar class="avatar" size="small" shape="circle" :src="user.avatar"/>
-      <span class="name">{{user.name}}</span>
+      <a-avatar class="avatar" size="small" shape="circle" :src="user.avatar" />
+      <span class="name">{{ user.name }}</span>
     </div>
     <a-menu :class="['avatar-menu']" slot="overlay">
       <a-menu-item @click="gotoProfile">
@@ -23,9 +23,8 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
-import {logout} from '@/services/user'
-
+import { mapGetters } from 'vuex'
+import { logout } from '@/services/user'
 export default {
   name: 'HeaderAvatar',
   computed: {
@@ -36,7 +35,7 @@ export default {
       logout()
       this.$router.push('/login')
     },
-    gotoProfile(){
+    gotoProfile() {
       this.$router.push('/profile')
     }
   }
@@ -44,20 +43,23 @@ export default {
 </script>
 
 <style lang="less">
-  .header-avatar{
-    display: inline-flex;
-    .avatar, .name{
-      align-self: center;
-    }
-    .avatar{
-      margin-right: 8px;
-    }
-    .name{
-      font-weight: 500;
-    }
-  }
-  .avatar-menu{
-    width: 150px;
+.header-avatar {
+  display: inline-flex;
+
+  .avatar,
+  .name {
+    align-self: center;
   }
 
-</style>
+  .avatar {
+    margin-right: 8px;
+  }
+
+  .name {
+    font-weight: 500;
+  }
+}
+
+.avatar-menu {
+  width: 150px;
+}</style>
