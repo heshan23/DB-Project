@@ -16,7 +16,13 @@ CONTENT_TYPE = "TEXT"
 CREATE_DATE = "DATE"
 # USER_ID ------外键
 BOARD_ID_LENGTH = 8  # CHAR 8
-image_url = ''
+
+
+class Image(models.Model):
+    img = models.ImageField(upload_to='images/', default='')
+
+    class Meta:
+        db_table = 'tb_images'
 
 
 # 要有id，但是id不向前端透明
@@ -25,7 +31,8 @@ class User(models.Model):
     email = models.CharField(max_length=EMAIL_LENGTH, verbose_name="email")
     password = models.CharField(max_length=PASSWORD_LENGTH, verbose_name="password")
     # open_date = models.DateField(verbose_name="open_date")
-    avatar = models.IntegerField()
+    avatar = models.ForeignKey(verbose_name="avatar", to=Image, null=True,
+                               on_delete=models.SET_NULL, default=None)
 
     class Meta:
         db_table = 'users'
@@ -43,6 +50,8 @@ class Post(models.Model):
     create_date = models.DateField(verbose_name="created_date")
     user = models.ForeignKey(verbose_name="user_poster_id", to=User,
                              on_delete=models.CASCADE, default=1)
+    image = models.ForeignKey(verbose_name="post_image", to=Image, null=True,
+                              on_delete=models.SET_NULL, default=None)
 
     class Meta:
         db_table = "posts"

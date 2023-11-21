@@ -3,6 +3,9 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from apps.models import *
+from apps.views.user.Images import image_url
+
+default_image = image_url + 'media/images/oo.jpg'
 
 
 class NewPost(APIView):
@@ -43,8 +46,13 @@ class QueryAllPost(APIView):
         for post in posts:
             like_count = PostLike.objects.filter(post_id=post.id).count()
             comment_count = Comment.objects.filter(post_id=post.id).count()
+            if post.image is None:
+                image = default_image
+            else:
+                image = post.image.img.url
             ret.append({
                 "user_name": post.user.user_name,
+                "image": image,
                 "title": post.title,
                 "content": post.content,
                 "create_date": post.create_date.strftime("%Y-%m-%d %H:%I:%S"),
@@ -74,9 +82,14 @@ class QueryUserPost(APIView):
         for post in posts:
             like_count = PostLike.objects.filter(post_id=post.id).count()
             comment_count = Comment.objects.filter(post_id=post.id).count()
+            if post.image is None:
+                image = default_image
+            else:
+                image = post.image.img.url
             ret.append({
                 "post_id": post.id,
                 "user_name": username,
+                'image': image,
                 "title": post.title,
                 "content": post.content,
                 "create_date": post.create_date.strftime("%Y-%m-%d %H:%I:%S"),
@@ -101,6 +114,10 @@ class PostGet(APIView):
             post_comments = Comment.objects.filter(post_id=post_id)
             tags = []
             tag_post = TagPost.objects.filter(post_id=post_id)
+            if post.image is None:
+                image = default_image
+            else:
+                image = post.image.img.url
             for tag in tag_post:
                 tags.append(tag.tag.name)
             for comment in post_comments:
@@ -122,6 +139,7 @@ class PostGet(APIView):
         ret = [{
             "post_id": post.id,
             "user_name": post.user.user_name,
+            'image': image,
             "title": post.title,
             "content": post.content,
             "tag": tags,
@@ -152,8 +170,11 @@ class ModifyPost(APIView):
         post.save()
         return Response({"reason": "修改成功"}, status=200)
 
+    '''
+class PostOfBoard(APIView):
 
-'''
+
+
 class CollectionPost(APIView):
     def post(self,request):
         try:
