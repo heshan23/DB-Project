@@ -1,10 +1,13 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from apps.views.user.Images import image_url
 from apps.models import *
 
 
 # Response默认第一个参数是data
+
+default_avatar_url = image_url + "media/images/oo.jpg"
 
 
 def check_user_name_exist(username):
@@ -31,7 +34,11 @@ class UserSignIn(APIView):
             return Response({"reason": "该用户名未被注册"}, status=404)
         if password != user.password:
             return Response({"reason": "密码错误"}, status=400)
-        ret = {"user_name": user.user_name, "avatar": user.avatar, "email": user.email}
+        if user.avatar is None:
+            avatar = default_avatar_url
+        else:
+            avatar = user.avatar.img.url
+        ret = {"user_name": user.user_name, "avatar": avatar, "email": user.email}
         return Response({"reason": "登录成功", "user": ret}, status=200)
 
 
@@ -51,7 +58,6 @@ class UserSignUp(APIView):
             user = User.objects.create(
                 user_name=user_name,
                 password=password,
-                avatar=0,
                 email=email,
             )
             user.save()
@@ -93,10 +99,14 @@ class YourAccountMessage(APIView):
             return Response({"reason": "keyError,请检查发送的信息是否有user_id"}, status=422)
         try:
             user = User.objects.get(user_name=user_name)
+            if user.avatar is None:
+                avatar = default_avatar_url
+            else:
+                avatar = user.avatar.img.url
             ret_data = {
                 "user_name": user.user_name,
                 "user_email": user.email,
-                "avatar": user.avatar,
+                "avatar": avatar,
             }
         except User.DoesNotExist:
             return Response({"reason": "不存在该账户"}, status=404)
