@@ -1,7 +1,7 @@
 <template>
     <div class="clearfix">
-        <a-upload action="https://a" list-type="picture-card" :file-list="fileList"
-            @preview="handlePreview" @change="handleChange">
+        <a-upload action="https://localhost:8081" list-type="picture-card" :file-list="fileList" @preview="handlePreview"
+            @change="handleChange">
             <div v-if="fileList.length < 8">
                 <a-icon type="plus" />
                 <div class="ant-upload-text">
