@@ -45,6 +45,7 @@
 <script>
 import CommonLayout from '@/layouts/CommonLayout'
 import { register } from '../../services/user'
+// import Vue from 'vue'
 export default {
   name: 'Register',
   components: { CommonLayout },
@@ -88,15 +89,14 @@ export default {
           const name = this.form.getFieldValue('name')
           const password = this.form.getFieldValue('password1')
           const email = this.form.getFieldValue('email')
-          //还需要检查用户名是否已存在
-          register(name, password, email).then(res => {
-            if (res.code == 200) {
-              this.$message.success('注册成功！', 1)
-              this.$router.push('/login')
-            }
+          // Vue.prototype.$message.info('注册中...', 1)
+          register(name, password, email).then(() => {
+            this.$message.success('注册成功！', 1)
+            this.$router.push('/login')
           }).catch(err => {
-            this.error = err.response.status
-            this.$message.error(err.response.data.reason, 1)
+            this.$message.error(err.response.data.reason, 1).then(() => {
+              location.reload()
+            })
           })
         }
       })
