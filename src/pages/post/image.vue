@@ -1,7 +1,7 @@
 <template>
     <div class="clearfix">
-        <a-upload action="https://a" list-type="picture-card" :file-list="fileList"
-            @preview="handlePreview" @change="handleChange">
+        <a-upload action="" list-type="picture-card" :file-list="fileList" @preview="handlePreview"
+            @change="handleChange">
             <div v-if="fileList.length < 8">
                 <a-icon type="plus" />
                 <div class="ant-upload-text">
@@ -29,35 +29,7 @@ export default {
             previewVisible: false,
             previewImage: '',
             fileList: [
-                {
-                    uid: '-1',
-                    name: 'image.png',
-                    status: 'done',
-                    url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-                },
-                {
-                    uid: '-2',
-                    name: 'image.png',
-                    status: 'done',
-                    url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-                },
-                {
-                    uid: '-3',
-                    name: 'image.png',
-                    status: 'done',
-                    url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-                },
-                {
-                    uid: '-4',
-                    name: 'image.png',
-                    status: 'done',
-                    url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-                },
-                {
-                    uid: '-5',
-                    name: 'image.png',
-                    status: 'error',
-                },
+                
             ],
         };
     },

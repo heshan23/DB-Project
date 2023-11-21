@@ -17,11 +17,6 @@ const routerMap = {
     path: '/register',
     component: () => import('@/pages/register')
   },
-  demo: {
-    name: '发帖',
-    renderMenu: false,
-    component: () => import('@/pages/demo')
-  },
   exp403: {
     authority: '*',
     name: 'exp403',

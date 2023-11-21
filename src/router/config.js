@@ -27,11 +27,6 @@ const options = {
       component: () => import('@/pages/exception/403'),
     },
     {
-      path: '/post',
-      name: '发帖',
-      component: () => import('@/pages/post'),
-    },
-    {
       path: '/',
       name: '首页',
       component: TabsView,
@@ -122,7 +117,6 @@ const options = {
         },
         {
           path: 'post',
-          name: '发帖',
           meta: {
             icon: 'file-ppt'
           },
