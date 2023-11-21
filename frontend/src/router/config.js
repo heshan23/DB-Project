@@ -17,11 +17,6 @@ const options = {
       component: () => import('@/pages/register'),
     },
     {
-      path: '/profile',
-      name: '个人中心',
-      component: () => import('@/pages/profile')
-    },
-    {
       path: '*',
       name: '404',
       component: () => import('@/pages/exception/404'),
@@ -32,9 +27,9 @@ const options = {
       component: () => import('@/pages/exception/403'),
     },
     {
-      path:'/post',
-      name:'发帖',
-      component:()=>import('@/pages/post'),
+      path: '/post',
+      name: '发帖',
+      component: () => import('@/pages/post'),
     },
     {
       path: '/',

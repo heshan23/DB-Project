@@ -1,7 +1,6 @@
 <template>
     <div>
-        <div>
-            <a-radio-group default-value="a" button-style="solid">
+            <a-radio-group default-value="a" button-style="solid" v-model="value" @change="onChange">
                 <a-radio-button value="a">
                     休闲娱乐
                 </a-radio-button>
@@ -11,11 +10,24 @@
                 <a-radio-button value="c">
                     生活时尚
                 </a-radio-button>
-                <a-radio-button value="d">
+                <a-radio-button value="d" onclick="click">
                     课程交流
                 </a-radio-button>
             </a-radio-group>
-        </div>
     </div>
 </template>
+<script>
+export default {
+    data(){
+        return {
+            value:'a',
+        }
+    },
+    methods:{
+        onChange(e){
+            console.log(e.target.value)
+        },
+    }
+}
+</script>
   

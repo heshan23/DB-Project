@@ -21,8 +21,12 @@
 import mytag from './tag.vue';
 import postImage from './image.vue';
 import mymenu from './menu.vue';
+import { mapGetters } from 'vuex';
 export default {
     name: 'post',
+    computed: {
+        ...mapGetters('account', ['user']),
+    },
     components: {
         mytag,
         postImage,
@@ -30,6 +34,11 @@ export default {
     },
     methods: {
         onSubmit() {
+            // const name=this.user.name
+            // const title=""
+            // const content=""
+            // const bname=""
+            // const tname=""
             this.$message.success('发帖成功！', 1)
             this.$router.push('/square')
         },
