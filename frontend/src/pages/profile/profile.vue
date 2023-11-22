@@ -1,6 +1,6 @@
 <template>
     <div class="profileTop">
-        <img class="avatar" src="@/assets/img/avatar.jpg" />
+        <img class="avatarz" src="@/assets/img/avatar.jpg" />
         <div class="userText">
             <div class="userName">
                 <span>{{ username }}</span>
@@ -44,7 +44,7 @@ export default {
     border-radius: 5px;
 }
 
-.avatar {
+.avatarz {
     width: 120px;
     height: 120px;
     background-color: #8c939d;

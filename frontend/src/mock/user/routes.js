@@ -44,11 +44,8 @@ Mock.mock(`${process.env.VUE_APP_API_BASE_URL}/routes`, 'get', () => {
           }
         ]
       },
-      {
-        router: 'exception',
-        children: ['exp404', 'exp403', 'exp500'],
-      },
       'post',
+      'profile',
       {
         router: 'demo',
         icon: 'file-ppt',
