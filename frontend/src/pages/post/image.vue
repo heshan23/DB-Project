@@ -1,7 +1,7 @@
 <template>
     <div class="clearfix">
-        <a-upload action="https://www.mocky.io/v2/5cc8019d300000980a055e76" list-type="picture-card" :file-list="fileList"
-            @preview="handlePreview" @change="handleChange">
+        <a-upload action="https://localhost:8081" list-type="picture-card" :file-list="fileList" @preview="handlePreview"
+            @change="handleChange" :customRequest="customRequest">
             <div v-if="fileList.length < 8">
                 <a-icon type="plus" />
                 <div class="ant-upload-text">
@@ -14,7 +14,9 @@
         </a-modal>
     </div>
 </template>
+
 <script>
+import uploadImage from '@/services/user'
 function getBase64(file) {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -29,39 +31,25 @@ export default {
             previewVisible: false,
             previewImage: '',
             fileList: [
-                {
-                    uid: '-1',
-                    name: 'image.png',
-                    status: 'done',
-                    url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-                },
-                {
-                    uid: '-2',
-                    name: 'image.png',
-                    status: 'done',
-                    url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-                },
-                {
-                    uid: '-3',
-                    name: 'image.png',
-                    status: 'done',
-                    url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-                },
-                {
-                    uid: '-4',
-                    name: 'image.png',
-                    status: 'done',
-                    url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-                },
-                {
-                    uid: '-5',
-                    name: 'image.png',
-                    status: 'error',
-                },
+
             ],
         };
     },
     methods: {
+        customRequest(data) {
+            const formData = new FormData();
+            formData.append('file', data.file);
+            uploadImage(formData).then((res) => {
+                this.$message.success(res.data.reason)
+                /**
+                 * 使用 res.data.url 获取图片地址
+                 * 使用 res.data.id 获取图片id (用作查询图片的 url)
+                 */
+            }
+            ).catch((err) => {
+                this.$message.error(err.response.code)
+            })
+        },
         handleCancel() {
             this.previewVisible = false;
         },

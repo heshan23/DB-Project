@@ -17,11 +17,6 @@ const options = {
       component: () => import('@/pages/register'),
     },
     {
-      path: '/profile',
-      name: '个人中心',
-      component: () => import('@/pages/profile')
-    },
-    {
       path: '*',
       name: '404',
       component: () => import('@/pages/exception/404'),
@@ -30,11 +25,6 @@ const options = {
       path: '/403',
       name: '403',
       component: () => import('@/pages/exception/403'),
-    },
-    {
-      path:'/post',
-      name:'发帖',
-      component:()=>import('@/pages/post'),
     },
     {
       path: '/',
@@ -127,7 +117,6 @@ const options = {
         },
         {
           path: 'post',
-          name: '发帖',
           meta: {
             icon: 'file-ppt'
           },

@@ -17,11 +17,6 @@ const routerMap = {
     path: '/register',
     component: () => import('@/pages/register')
   },
-  demo: {
-    name: '发帖',
-    renderMenu: false,
-    component: () => import('@/pages/demo')
-  },
   exp403: {
     authority: '*',
     name: 'exp403',
@@ -70,11 +65,24 @@ const routerMap = {
     icon: 'edit',
     component: () => import('@/pages/post')
   },
-  square:{
-    name:'广场',
-    path:'/square',
-    icon:'rise',
-    component:()=>import('@/pages/square')
+  square: {
+    name: '广场',
+    path: '/square',
+    icon: 'rise',
+    component: () => import('@/pages/square')
   },
+  article: {
+    name: '文章',
+    path: '/article',
+    component: () => import('@/pages/article')
+  },
+  demo1: {
+    path: '/demo1',
+    component: () => import('@/pages/demo')
+  },
+  demo2: {
+    path: '/demo2',
+    component: () => import('@/pages/square')
+  }
 }
 export default routerMap

@@ -8,6 +8,7 @@ const routesConfig = [
   'root',
   'profile',
   'post',
+  'article',
   {
     router: 'exp404',
     path: '*',

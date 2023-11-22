@@ -68,7 +68,7 @@
 
 <script>
 import CommonLayout from '@/layouts/CommonLayout'
-import { login,getRoutesConfig} from '@/services/user'
+import { login, getRoutesConfig } from '@/services/user'
 import { setAuthorization } from '@/utils/request'
 import { loadRoutes } from '@/utils/routerUtil'
 import { mapMutations } from 'vuex'
@@ -92,29 +92,38 @@ export default {
           this.logging = true
           const name = this.form.getFieldValue('name')
           const password = this.form.getFieldValue('password')
-          login(name, password).then(this.afterLogin)
+          login(name, password).then(this.afterLogin).catch((err) => {
+            this.logging = false
+            this.error = err.code
+            this.$message.error(err.response.data.reason, 1).then(() => {
+              location.reload()
+            })
+          })
         }
       })
     },
     afterLogin(res) {
+      /* 目前 permission、roles、auth 都是假数据，该部分待后端接口完成后再修改 */
       this.logging = false
       const loginRes = res.data
-      if (loginRes.code >= 0) {
-        const { user, permissions, roles } = loginRes.data
-        this.setUser(user)
-        this.setPermissions(permissions)
-        this.setRoles(roles)
-        setAuthorization({ token: loginRes.data.token, expireAt: new Date(loginRes.data.expireAt) })
-        // 获取路由配置
-        getRoutesConfig().then(result => {
-          const routesConfig = result.data.data
-          loadRoutes(routesConfig)
-          this.$router.push('/square')
-          this.$message.success(loginRes.message, 3)
-        })
-      } else {
-        this.error = loginRes.message
+      const user = loginRes.user
+      const permissions = [{ id: 'queryForm', operation: ['add', 'edit'] }]
+      const roles = [{ id: 'admin', operation: ['add', 'edit', 'delete'] }]
+      this.setUser(user)
+      this.setPermissions(permissions)
+      this.setRoles(roles)
+      const auth = {
+        token: 'Authorization:' + Math.random(),
+        expireAt: new Date(new Date().getTime() + 30 * 60 * 1000)
       }
+      setAuthorization(auth)
+      // 获取路由配置
+      getRoutesConfig().then(result => {
+        const routesConfig = result.data.data
+        loadRoutes(routesConfig)
+        this.$router.push('/square')
+        this.$message.success(loginRes.reason, 3)
+      })
     },
     onClose() {
       this.error = false

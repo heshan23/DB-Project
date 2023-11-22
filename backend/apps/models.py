@@ -18,13 +18,21 @@ CREATE_DATE = "DATE"
 BOARD_ID_LENGTH = 8  # CHAR 8
 
 
+class Image(models.Model):
+    img = models.ImageField(upload_to='images/', default='')
+
+    class Meta:
+        db_table = 'tb_images'
+
+
 # 要有id，但是id不向前端透明
 class User(models.Model):
     user_name = models.CharField(max_length=USER_NAME_LENGTH, verbose_name="user_name")
     email = models.CharField(max_length=EMAIL_LENGTH, verbose_name="email")
     password = models.CharField(max_length=PASSWORD_LENGTH, verbose_name="password")
     # open_date = models.DateField(verbose_name="open_date")
-    avatar = models.IntegerField()
+    avatar = models.ForeignKey(verbose_name="avatar", to=Image, null=True,
+                               on_delete=models.SET_NULL, default=None)
 
     class Meta:
         db_table = 'users'
@@ -40,8 +48,10 @@ class Post(models.Model):
     title = models.CharField(max_length=TITLE_SIZE, verbose_name="title")
     content = models.TextField(verbose_name="text")
     create_date = models.DateField(verbose_name="created_date")
-    user_id = models.ForeignKey(verbose_name="user_poster_id", to=User,
-                                on_delete=models.CASCADE, default=1)
+    user = models.ForeignKey(verbose_name="user_poster_id", to=User,
+                             on_delete=models.CASCADE, default=1)
+    image = models.ForeignKey(verbose_name="post_image", to=Image, null=True,
+                              on_delete=models.SET_NULL, default=None)
 
     class Meta:
         db_table = "posts"
@@ -49,3 +59,87 @@ class Post(models.Model):
 
     def __str__(self):
         return str(self.id) + " " + str(self.title)
+
+
+class PostLike(models.Model):
+    user = models.ForeignKey(verbose_name="user_id", to=User, on_delete=models.CASCADE, default=1)
+    post = models.ForeignKey(verbose_name="post_id", to=Post, on_delete=models.CASCADE, default=1)
+
+    class Meta:
+        db_table = "like"
+        verbose_name = "like"
+        unique_together = ("user", "post")
+
+
+class Collection(models.Model):
+    user = models.ForeignKey(verbose_name="user_id", to=User, on_delete=models.CASCADE, default=1)
+    post = models.ForeignKey(verbose_name="post_id", to=Post, on_delete=models.CASCADE, default=1)
+
+    class Meta:
+        db_table = "collection"
+        verbose_name = "collection"
+        unique_together = ("user", "post")
+
+
+class Comment(models.Model):
+    user = models.ForeignKey(verbose_name="user_id", to=User, on_delete=models.CASCADE, default=1)
+    post = models.ForeignKey(verbose_name="post_id", to=Post, on_delete=models.CASCADE, default=1)
+    content = models.TextField(verbose_name="text")
+    res_comment = models.IntegerField(verbose_name="res_to_comment_id", default=-1)
+    create_date = models.DateField(verbose_name="create_date")
+
+    # 当然，对一个帖子可以有多个评论
+    class Meta:
+        db_table = "comment"
+        verbose_name = "comment"
+
+
+class CommentLike(models.Model):
+    user = models.ForeignKey(verbose_name="user_id", to=User, on_delete=models.CASCADE, default=1)
+    comment = models.ForeignKey(verbose_name="comment_id", to=Comment, on_delete=models.CASCADE, default=1)
+
+    class Meta:
+        db_table = "likes_comment"
+        verbose_name = "like_comment"
+        unique_together = ("user", "comment")
+
+
+class Tag(models.Model):
+    name = models.CharField(verbose_name="tag_name", max_length=8)
+
+    class Meta:
+        db_table = "tags"
+        verbose_name = "tag"
+
+
+class TagPost(models.Model):
+    tag = models.ForeignKey(verbose_name="tag", to=Tag, on_delete=models.CASCADE, default=1)
+    post = models.ForeignKey(verbose_name="post", to=Post, on_delete=models.CASCADE, default=1)
+
+    class Meta:
+        db_table = "tags_post"
+        verbose_name = "tag_post"
+
+
+class Board(models.Model):
+    name = models.CharField(verbose_name="board_name", max_length=16)
+
+    class Meta:
+        db_table = "board"
+        verbose_name = "board"
+
+
+class BoardPost(models.Model):
+    board = models.ForeignKey(verbose_name="board", to=Board, on_delete=models.CASCADE, default=1)
+    post = models.ForeignKey(verbose_name="post", to=Post, on_delete=models.CASCADE, default=1)
+
+    class Meta:
+        db_table = "board_post"
+        verbose_name = "board_post"
+
+
+'''
+class Report(models.Model):
+    contengt =models.TextField()
+    user = models.ForeignKey(verbose_name="reporter",to=User,)
+    '''
