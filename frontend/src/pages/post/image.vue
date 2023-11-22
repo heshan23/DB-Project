@@ -31,7 +31,7 @@ export default {
             previewVisible: false,
             previewImage: '',
             fileList: [
-
+                
             ],
         };
     },
