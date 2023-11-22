@@ -38,7 +38,7 @@ export default {
     methods: {
         customRequest(data) {
             const formData = new FormData();
-            formData.append('file', data.file);
+            formData.append('img', data.file);
             uploadImage(formData).then((res) => {
                 this.$message.success(res.data.reason)
                 /**

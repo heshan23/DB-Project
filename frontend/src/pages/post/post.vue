@@ -51,7 +51,6 @@
     </div>
 </template>
 
-import {newPost} from '@/services/user';
 <script>
 import { newPost } from '../../services/user';
 import postImage from './image.vue';
