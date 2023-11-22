@@ -1,5 +1,53 @@
 <template>
     <div class="card">
+        <a-card hoverable style="width: 300px;">
+            <img slot="cover" alt="example" src="@/assets/img/logo.png" @click="onclick" />
+            <a-card-meta :title=title :description=writer @click="onclick">
+                <a-avatar slot="avatar" :src="require('@/assets/img/avatar.jpg')" />
+            </a-card-meta>
+            <template v-for="{ type, text } in actions" slot="actions">
+                <span :key="type">
+                    <a-icon :type="type" style="margin-right: 8px" />
+                    {{ text }}
+                </span>
+            </template>
+        </a-card>
+        <a-card hoverable style="width: 300px">
+            <img slot="cover" alt="example" src="@/assets/img/logo.png" @click="onclick" />
+            <a-card-meta :title=title :description=writer @click="onclick">
+                <a-avatar slot="avatar" :src="require('@/assets/img/avatar.jpg')" />
+            </a-card-meta>
+            <template v-for="{ type, text } in actions" slot="actions">
+                <span :key="type">
+                    <a-icon :type="type" style="margin-right: 8px" />
+                    {{ text }}
+                </span>
+            </template>
+        </a-card>
+        <a-card hoverable style="width: 300px">
+            <img slot="cover" alt="example" src="@/assets/img/logo.png" @click="onclick" />
+            <a-card-meta :title=title :description=writer @click="onclick">
+                <a-avatar slot="avatar" :src="require('@/assets/img/avatar.jpg')" />
+            </a-card-meta>
+            <template v-for="{ type, text } in actions" slot="actions">
+                <span :key="type">
+                    <a-icon :type="type" style="margin-right: 8px" />
+                    {{ text }}
+                </span>
+            </template>
+        </a-card>
+        <a-card hoverable style="width: 300px">
+            <img slot="cover" alt="example" src="@/assets/img/logo.png" @click="onclick" />
+            <a-card-meta :title=title :description=writer @click="onclick">
+                <a-avatar slot="avatar" :src="require('@/assets/img/avatar.jpg')" />
+            </a-card-meta>
+            <template v-for="{ type, text } in actions" slot="actions">
+                <span :key="type">
+                    <a-icon :type="type" style="margin-right: 8px" />
+                    {{ text }}
+                </span>
+            </template>
+        </a-card>
         <a-card hoverable style="width: 300px">
             <img slot="cover" alt="example" src="@/assets/img/logo.png" @click="onclick" />
             <a-card-meta :title=title :description=writer @click="onclick">
