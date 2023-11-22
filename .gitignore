@@ -1,1 +1,3 @@
 node_modules
+backend/media/images
+__pycache__
