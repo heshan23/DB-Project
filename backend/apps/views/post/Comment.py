@@ -24,6 +24,13 @@ class NewComment(APIView):
         try:
             user = User.objects.get(user_name=username)
             post = Post.objects.get(id=post_id)
+            be_call_user = post.user
+            notice = Notice.objects.create(
+                user=be_call_user,
+                content=str(username) + " 回复了你的帖子: " + str(post.title),
+                create_date=timezone.now()
+            )
+            notice.save()
             if res_id is not None:
                 comment = Comment.objects.create(
                     user=user,

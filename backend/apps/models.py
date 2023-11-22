@@ -138,6 +138,27 @@ class BoardPost(models.Model):
         verbose_name = "board_post"
 
 
+# 公告
+class Ann(models.Model):
+    create_date = models.DateField(verbose_name="create_date")
+    content = models.TextField(verbose_name="content")
+
+    class Meta:
+        db_table = "tb_Ann"
+        verbose_name = "Ann"
+
+
+class Notice(models.Model):
+    create_date = models.DateField(verbose_name="create_date")
+    content = models.TextField(verbose_name="content")
+    user = models.ForeignKey(verbose_name="receiver",
+                             to=User, on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = "tb_Notice"
+        verbose_name = "notice"
+
+
 '''
 class Report(models.Model):
     contengt =models.TextField()
