@@ -42,7 +42,7 @@ export async function newPost(name, title, content, board, tags) {
  * @param board 版块名
  * @param tags 标签
  */
-export async function queryPost(user_name=null, board=null, tags=null) {
+export async function queryPost(user_name="", board="", tags=[]) {
   return request(path.QUERYPOST, METHOD.GET, {
     "user_name": user_name,
     "board": board,
@@ -78,6 +78,10 @@ export async function unlikeComment(user_name, comment_id) {
   })
 }
 
+export async function uploadImage(file) {
+  return request(path.UPLOADIMG, METHOD.POST, file)
+}
+
 /**
  * 退出登录
  */
@@ -95,5 +99,6 @@ export default {
   newPost,
   queryPost,
   likePost,
-  likeComment
+  likeComment,
+  uploadImage
 }

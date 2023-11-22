@@ -12,4 +12,5 @@ module.exports = {
   LIKECOMMENT: `${BASE_URL}/Post/LikeComment/`,
   UNLIKE: `${BASE_URL}/Post/Unlike/`,
   UNLIKECOMMENT: `${BASE_URL}/Post/UnlikeComment/`,
+  UPLOADIMG: `${BASE_URL}/User/UploadImage/`
 }

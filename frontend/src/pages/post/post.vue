@@ -74,7 +74,7 @@ export default {
             e.preventDefault()
             this.form.validateFields((err) => {
                 if (!err) {
-                    const name = this.user.name
+                    const name = this.user.user_name
                     const title = this.form.getFieldValue('title')
                     const content = this.content
                     const block_name = this.value
