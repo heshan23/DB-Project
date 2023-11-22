@@ -136,3 +136,10 @@ class BoardPost(models.Model):
     class Meta:
         db_table = "board_post"
         verbose_name = "board_post"
+
+
+'''
+class Report(models.Model):
+    contengt =models.TextField()
+    user = models.ForeignKey(verbose_name="reporter",to=User,)
+    '''

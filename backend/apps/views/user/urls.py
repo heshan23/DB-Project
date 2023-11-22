@@ -1,6 +1,7 @@
 from django.urls import path
 
 from apps.views.user.Account import *
+from apps.views.user.Collection import *
 from apps.views.user.Images import *
 from apps.views.user.Like import *
 
@@ -15,6 +16,9 @@ urlpatterns = [
     path('UnLike/', UnLike.as_view()),
     path('LikeComment/', LikeComment.as_view()),
     path('UnLikeComment/', UnLikeComment.as_view()),
+    # 用户收藏
+    path('Collection/', DOCollection.as_view()),
+    path('UnCollection/', UnCollection.as_view()),
     # 上传图片
     path('UploadImage/', UploadImage.as_view()),
     path('GetImageUrl/', GetImageUrl.as_view())
