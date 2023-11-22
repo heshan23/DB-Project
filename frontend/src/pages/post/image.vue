@@ -1,7 +1,7 @@
 <template>
     <div class="clearfix">
-        <a-upload action="https://localhost:8081" list-type="picture-card" :file-list="fileList" @preview="handlePreview"
-            @change="handleChange" :customRequest="customRequest">
+        <a-upload list-type="picture-card" :file-list="fileList" @preview="handlePreview" :customRequest="customRequest"
+            :remove="handleRemove">
             <div v-if="fileList.length < 8">
                 <a-icon type="plus" />
                 <div class="ant-upload-text">
@@ -40,6 +40,13 @@ export default {
             const formData = new FormData();
             formData.append('img', data.file);
             uploadImage(formData).then((res) => {
+                let img = {
+                    uid: res.data.id,
+                    name: 'test.jpg',
+                    status: 'done',
+                    url: res.data.url,
+                }
+                this.fileList.push(img)
                 this.$message.success(res.data.reason)
                 /**
                  * 使用 res.data.url 获取图片地址
@@ -63,6 +70,14 @@ export default {
         handleChange({ fileList }) {
             this.fileList = fileList;
         },
+        handleRemove(file) {
+            let index = this.fileList.indexOf(file)
+            const uid=file.uid
+            console.log(uid)
+            let newFileList = this.fileList.slice()
+            newFileList.splice(index, 1)
+            this.fileList = newFileList
+        }
     },
 };
 </script>
