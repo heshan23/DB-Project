@@ -30,7 +30,7 @@
       </a-spin>
     </div>
     <span @click="fetchNotice" class="header-notice">
-      <a-badge class="notice-badge" count="12">
+      <a-badge class="notice-badge" :count="count">
         <a-icon :class="['header-notice-icon']" type="bell" />
       </a-badge>
     </span>
@@ -44,6 +44,7 @@ export default {
     return {
       loading: false,
       show: false,
+      count: 6,
       notices: [
         { title: "请维护个人资料", date: "1年前" },
         { title: "谨防上当受骗", date: "2年前" }
