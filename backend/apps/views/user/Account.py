@@ -1,8 +1,8 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from apps.views.user.Images import image_url
 from apps.models import *
+from apps.views.user.Images import image_url
 
 
 # Response默认第一个参数是data
@@ -111,3 +111,11 @@ class YourAccountMessage(APIView):
         except User.DoesNotExist:
             return Response({"reason": "不存在该账户"}, status=404)
         return Response({"reason": "", "data": ret_data}, status=200)
+
+
+class RemoveUser(APIView):
+    def post(self, request):
+        user_id = request.data['user_id']
+        user = User.objects.get(id=user_id)
+        user.delete()
+        return Response({"reason": "账号注销成功"}, status=200)

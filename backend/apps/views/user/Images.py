@@ -2,8 +2,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from apps.models import *
-
-image_url = 'http://127.0.0.1:8081/'
+from backend import settings
+image_url = 'http://127.0.0.1:8081'
 
 
 class UploadImage(APIView):
@@ -12,6 +12,7 @@ class UploadImage(APIView):
         img = Image.objects.create(
             img=file_obj
         )
+        print(settings.MEDIA_ROOT)
         img.save()
         return Response({'reason': '上传成功',
                          "url": image_url + img.img.url, "id": img.id}, status=200)
