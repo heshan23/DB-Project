@@ -40,7 +40,10 @@
         </a-form>
     </div>
 </template>
+
+import {newPost} from '@/services/user';
 <script>
+import { newPost } from '../../services/user';
 import postImage from './image.vue';
 import { mapGetters } from 'vuex';
 export default {
@@ -76,13 +79,13 @@ export default {
                     const content = this.content
                     const block_name = this.value
                     const tag_name = this.selectedTags//返回一个数组
-                    console.log(name)
-                    console.log(title)
-                    console.log(content)
-                    console.log(block_name)
-                    console.log(tag_name)
-                    this.$message.success('发帖成功！', 1)
-                    this.$router.push('/square')
+                    newPost(name, title, content, block_name, tag_name).then(() => {
+                        this.$message.success('发帖成功！', 1)
+                        this.$router.push('/square')
+                    }).catch((err) => {
+                        this.error = err.code
+                        this.$message.error(err.response.data.reason, 1);
+                    })
                 }
             })
         }, handleTagChange(tag, checked) {
