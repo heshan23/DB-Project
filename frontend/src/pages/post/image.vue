@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import uploadImage from '@/services/user'
+import { uploadImage } from '@/services/user'
 function getBase64(file) {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -31,14 +31,14 @@ export default {
             previewVisible: false,
             previewImage: '',
             fileList: [
-                
+
             ],
         };
     },
     methods: {
         customRequest(data) {
             const formData = new FormData();
-            formData.append('file', data.file);
+            formData.append('img', data.file);
             uploadImage(formData).then((res) => {
                 this.$message.success(res.data.reason)
                 /**
