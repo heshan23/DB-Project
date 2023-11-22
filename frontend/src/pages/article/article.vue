@@ -12,9 +12,6 @@
                     </span>
                     <AddComment />
                     <commentList />
-                    <commentList />
-                    <commentList />
-                    <commentList />
                 </div>
             </a-layout-content>
         </a-layout>
