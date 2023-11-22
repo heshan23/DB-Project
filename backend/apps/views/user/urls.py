@@ -21,7 +21,7 @@ urlpatterns = [
     path('UnCollection/', UnCollection.as_view()),
     # 上传图片
     path('UploadImage/', UploadImage.as_view()),
-    path('GetImageUrl/', GetImageUrl.as_view())
+    path('GetImageUrl/', GetImageUrl.as_view()),
     # 管理员功能
-
+    path('RemoveUser/', RemoveUser.as_view())
 ]

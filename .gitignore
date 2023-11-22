@@ -1,3 +1,3 @@
 node_modules
 backend/media/images
-__pycache__
+ackend/apps/__pycache__

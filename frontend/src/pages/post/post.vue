@@ -4,8 +4,9 @@
         <a-row>
             <a-col :span=16 class="border1">
                 <a-form @submit="onSubmit" :form="form">
-                    <a-form-item style="width: 790px;">
-                        <a-input autocomplete=false size="large" placeholder="请输入帖子名称" v-decorator="['title', rules.title]">
+                    <a-form-item>
+                        <a-input style="width: 790px; " autocomplete=false size="large" placeholder="请输入帖子名称"
+                            v-decorator="['title', rules.title]">
                         </a-input>
                     </a-form-item>
                     <div>
@@ -45,7 +46,8 @@
             </a-col>
             <a-col :span=7 class="border2">
                 <h1 style="text-align: center;font-size:large;line-height: 40px">社区公约</h1>
-                <span style="font-size: larger;line-height: 20px;">社区里鼓励真诚地表达、专业地讨论、友善地互动，反对不友善、低质、低俗、抄袭、侵权、虚假认证、恶意营销导流等破坏社区生态的内容与行为，禁止一切违法违规行为。</span>
+                <span
+                    style="font-size: larger;line-height: 20px;">社区里鼓励真诚地表达、专业地讨论、友善地互动，反对不友善、低质、低俗、抄袭、侵权、虚假认证、恶意营销导流等破坏社区生态的内容与行为，禁止一切违法违规行为。</span>
             </a-col>
         </a-row>
     </div>
