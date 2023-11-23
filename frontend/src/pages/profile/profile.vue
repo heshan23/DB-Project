@@ -16,8 +16,30 @@
                 <a-space size="small">
                     <a-button :loading="loading" ghost>上传头像</a-button>
                     <a-button :loading="loading" @click="edit" ghost>修改信息</a-button>
-                    <a-modal v-model="visible" title="Edit Information" :confirm-loading="confirmLoading" @ok="handleOk">
-                        <p>Some contents</p>
+                    <a-modal v-model="visible" title="Edit Information" :confirm-loading="confirmLoading"
+                        @ok="handleCreate">
+                        <a-form :layout="formLayout" :form="form">
+                            <a-form-item label="更改信息" :label-col="formItemLayout.labelCol"
+                                :wrapper-col="formItemLayout.wrapperCol">
+                            </a-form-item>
+                            <a-form-item label="用户名" :label-col="formItemLayout.labelCol"
+                                :wrapper-col="formItemLayout.wrapperCol">
+                                <a-input placeholder="input placeholder" />
+                            </a-form-item>
+                            <a-form-item label="旧密码" :label-col="formItemLayout.labelCol"
+                                :wrapper-col="formItemLayout.wrapperCol">
+                                <a-input placeholder="input placeholder" />
+                            </a-form-item>
+                            <a-form-item label="新密码" :label-col="formItemLayout.labelCol"
+                                :wrapper-col="formItemLayout.wrapperCol">
+                                <a-input placeholder="input placeholder" />
+                            </a-form-item>
+                            <a-form-item :wrapper-col="buttonItemLayout.wrapperCol">
+                                <a-button type="primary" @click="submit">
+                                    Submit
+                                </a-button>
+                            </a-form-item>
+                        </a-form>
                     </a-modal>
                 </a-space>
             </div>
@@ -49,17 +71,45 @@ export default {
             signature: "you",
             loading: false,
             visible: false,
-            confirmLoading: false
+            confirmLoading: false,
+            formLayout: 'horizontal',
+            form: this.$form.createForm(this)
         }
+    },
+    computed: {
+        formItemLayout() {
+            const { formLayout } = this;
+            return formLayout === 'horizontal'
+                ? {
+                    labelCol: { span: 4 },
+                    wrapperCol: { span: 14 },
+                }
+                : {};
+        },
+        buttonItemLayout() {
+            const { formLayout } = this;
+            return formLayout === 'horizontal'
+                ? {
+                    wrapperCol: { span: 14, offset: 4 },
+                }
+                : {};
+        },
     },
     methods: {
         edit() {
             // this.$message.success('success');
             this.visible = true
         },
-        handleOk() {
+        handleCancel() {
             // open.value = false;
             this.visible = false
+        },
+        handleCreate() {
+            this.visible = false;
+        },
+        submit() {
+            // const name = this.form.getFieldValue('name')
+            // const password = this.form.getFieldValue('password')
         }
     }
 }
