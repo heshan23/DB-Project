@@ -7,7 +7,7 @@ from apps.views.user.Images import image_url
 
 # Response默认第一个参数是data
 
-default_avatar_url = image_url + "media/images/oo.jpg"
+default_avatar_url = image_url + "/media/images/default_avator.jpg"
 
 
 def check_user_name_exist(username):
@@ -115,7 +115,7 @@ class YourAccountMessage(APIView):
 
 class RemoveUser(APIView):
     def post(self, request):
-        user_id = request.data['user_id']
+        user_id = request.data["user_id"]
         user = User.objects.get(id=user_id)
         user.delete()
         return Response({"reason": "账号注销成功"}, status=200)
