@@ -19,12 +19,10 @@
             </span>
             <span key="comment-basic-reply-to">Reply to</span>
         </template>
-        <a slot="author">Han Solo</a>
+        <a slot="author">游客</a>
         <a-avatar slot="avatar" src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" alt="Han Solo" />
         <p slot="content">
-            We supply a series of design principles, practical patterns and high quality design resources
-            (Sketch and Axure), to help people create their product prototypes beautifully and
-            efficiently.
+            写的真好下次我也去！
         </p>
         <a-tooltip slot="datetime" :title="moment().format('YYYY-MM-DD HH:mm:ss')">
             <span>{{ moment().fromNow() }}</span>
