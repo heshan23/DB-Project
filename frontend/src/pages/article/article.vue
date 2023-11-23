@@ -4,11 +4,8 @@
             <a-layout id="components-layout-demo-fixed-sider">
                 <a-layout-sider :style="{ position: 'fixed' }" :width=600>
                     <a-carousel>
-                        <div>
-                            <img src="@/assets/img/avatar.jpg" />
-                        </div>
-                        <div>
-                            <img src="@/assets/img/avatar.jpg" />
+                        <div v-for="(item, key) in images" :key="key">
+                            <img :src=item.url />
                         </div>
                     </a-carousel>
                 </a-layout-sider>
@@ -17,7 +14,7 @@
                         <div>
                             <h1>{{ title }}</h1>
                             <span>
-                                {{ contend }}
+                                {{ content }}
                             </span>
                             <AddComment />
                             <commentList />
@@ -43,7 +40,14 @@ export default {
     data() {
         return {
             title: '项目介绍',
-            contend: '这是项目介绍',
+            content: '这是项目介绍',
+            images: [
+                { url: require('@/assets/img/avatar.jpg') },
+                { url: require('@/assets/img/avatar.jpg') }
+            ],
+            comments:[
+                
+            ]
         }
     }
 }
