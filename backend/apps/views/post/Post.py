@@ -1,8 +1,6 @@
 from django.utils import timezone
-from rest_framework.response import Response
-from rest_framework.views import APIView
 
-from apps.models import *
+from apps.views.user.Account import *
 from apps.views.user.Images import image_url
 
 default_image = image_url + 'media/images/oo.jpg'
@@ -150,7 +148,8 @@ class QueryPost(APIView):
             print(e)
             if board_name != "":
                 good_search = False
-        tag_list = request.GET['tags']
+        tag_list = request.GET.getlist('tags[]')
+        print("this is tags :" + str(tag_list))
         try:
             # 注意,
             for tag_name in tag_list:
@@ -166,7 +165,7 @@ class QueryPost(APIView):
                     ).values_list("post", flat=True))
         except Tag.DoesNotExist as e:
             print(e)
-            if tag_list:
+            if len(tag_list) != 0:
                 good_search = False
         ret = []
         if final_post is None:
@@ -182,19 +181,25 @@ class QueryPost(APIView):
                 image = default_image
             else:
                 image = post.image.img.url
+            if post.user.avatar is None:
+                avatar = default_avatar_url
+            else:
+                avatar = post.user.avatar.img.url
             ret.append({
                 "post_id": post.id,
-                "user_name": post.user.user_name,
-                "image": image,
+                "writer": post.user.user_name,
+                "avatar": avatar,
+                "picture": image,
                 "title": post.title,
                 "content": post.content,
                 "create_date": post.create_date.strftime("%Y-%m-%d %H:%I:%S"),
                 "like_count": like_count,
-                "comment_count": comment_count
+                "comment_count": comment_count,
+                "star_count": 0,
             })
         return Response({
             "reason": "查询成功",
-            "data": ret,
+            "content": ret,
         }, status=200)
 
 
