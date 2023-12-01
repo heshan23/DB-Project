@@ -15,8 +15,14 @@
     </div>
 </template>
 <script>
+import { queryPost } from '@/services/user';
 export default {
     data() {
+        queryPost().then(res => {
+            console.log(res.data)
+        }).catch(err => {
+            console.log(err)
+        })
         return {
             contents: [
                 {
