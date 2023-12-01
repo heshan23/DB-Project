@@ -1,7 +1,7 @@
 <template>
     <div class="card">
-        <a-card hoverable style="width: 300px;" v-for="(item, key) in contents " :key=key>
-            <img slot="cover" alt="example" :src="item.picture" @click="onclick" />
+        <a-card hoverable style="width: 300px;margin: 2px;" v-for="(item, key) in contents " :key=key>
+            <img class="img" slot="cover" alt="example" :src="item.picture" @click="onclick" />
             <a-card-meta :title=item.title :description=item.writer @click="onclick">
                 <a-avatar slot="avatar" :src=item.avatar />
             </a-card-meta>
@@ -74,6 +74,17 @@ export default {
                         { type: 'message', text: '1283' },
                     ],
                 },
+                {
+                    title: '项目介绍',
+                    avatar: require('@/assets/img/avatar.jpg'),
+                    picture: require('@/assets/img/avatar.jpg'),
+                    writer: 'heshan',
+                    actions: [
+                        { type: 'like-o', text: '18' },
+                        { type: 'star-o', text: '120' },
+                        { type: 'message', text: '1283' },
+                    ],
+                },
             ],
 
         }
@@ -89,7 +100,11 @@ export default {
 .card {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: start;
+}
+
+.img {
+    height: 310px;
 }
 </style>  
 

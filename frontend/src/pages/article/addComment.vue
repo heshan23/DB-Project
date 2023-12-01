@@ -11,7 +11,7 @@
             <a-avatar slot="avatar" :src="require('@/assets/img/avatar.jpg')" alt="heshan" />
             <div slot="content">
                 <a-form-item>
-                    <a-textarea :rows="4" :value="value" @change="handleChange" />
+                    <a-textarea :rows="3" :value="value" @change="handleChange" style="background-color:aliceblue;"/>
                 </a-form-item>
                 <a-form-item>
                     <a-button html-type="submit" :loading="submitting" type="primary" @click="handleSubmit">
