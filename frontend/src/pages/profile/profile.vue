@@ -24,20 +24,17 @@
                             </a-form-item>
                             <a-form-item label="用户名" :label-col="formItemLayout.labelCol"
                                 :wrapper-col="formItemLayout.wrapperCol">
-                                <a-input placeholder="input placeholder" />
+                                <a-input placeholder="请输入新用户名 留空则不变" v-decorator="['new_name',]" />
                             </a-form-item>
                             <a-form-item label="旧密码" :label-col="formItemLayout.labelCol"
                                 :wrapper-col="formItemLayout.wrapperCol">
-                                <a-input placeholder="input placeholder" />
+                                <a-input placeholder="请输入旧密码" />
                             </a-form-item>
                             <a-form-item label="新密码" :label-col="formItemLayout.labelCol"
                                 :wrapper-col="formItemLayout.wrapperCol">
-                                <a-input placeholder="input placeholder" />
+                                <a-input placeholder="请输入新密码 留空则不变" />
                             </a-form-item>
                             <a-form-item :wrapper-col="buttonItemLayout.wrapperCol">
-                                <a-button type="primary" @click="submit">
-                                    Submit
-                                </a-button>
                             </a-form-item>
                         </a-form>
                     </a-modal>
@@ -64,6 +61,8 @@
 </template>
 
 <script>
+import { editProfile } from '@/services/user'
+import { mapGetters } from 'vuex';
 export default {
     data() {
         return {
@@ -94,6 +93,7 @@ export default {
                 }
                 : {};
         },
+        ...mapGetters('account', ['user']),
     },
     methods: {
         edit() {
@@ -105,11 +105,17 @@ export default {
             this.visible = false
         },
         handleCreate() {
+            const beforename = "y";
+            const name = this.form.getFieldValue('用户名');
+            // const oldPassword = this.form.getFieldValue('旧密码');
+            const newPassword = this.form.getFieldValue('新密码');
+            editProfile(beforename, name, newPassword).then(() => {
+                this.$message.success('修改成功！', 1)
+            }).catch((err) => {
+                this.error = err.code
+                this.$message.error(err.response.data.reason, 1);
+            })
             this.visible = false;
-        },
-        submit() {
-            // const name = this.form.getFieldValue('name')
-            // const password = this.form.getFieldValue('password')
         }
     }
 }

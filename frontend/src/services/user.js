@@ -26,6 +26,14 @@ export async function getRoutesConfig() {
   return request(path.ROUTES, METHOD.GET)
 }
 
+export async function editProfile(before_name, name, password) {
+  return request(path.EDITPROFILE, METHOD.POST, {
+    "before_name": before_name, // 旧用户名
+    "new_name": name,
+    "new_password": password
+  })
+}
+
 export async function newPost(name, title, content, board, tags) {
   return request(path.NEWPOST, METHOD.POST, {
     "user_name": name,
