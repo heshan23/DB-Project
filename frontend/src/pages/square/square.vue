@@ -44,65 +44,6 @@ export default {
         return {
             contents: ret
         }
-        // return {
-        //     contents: [
-        //         {
-        //             title: '旅途风光',
-        //             avatar: require('@/assets/img/avatar.jpg'),
-        //             picture: require('@/assets/img/test1.png'),
-        //             writer: 'heshan',
-        //             actions: [
-        //                 { type: 'like-o', text: '2' },
-        //                 { type: 'star-o', text: '23' },
-        //                 { type: 'message', text: '234' },
-        //             ],
-        //         },
-        //         {
-        //             title: '摄影技巧',
-        //             avatar: require('@/assets/img/avatar.jpg'),
-        //             picture: require('@/assets/img/test2.png'),
-        //             writer: 'heshan',
-        //             actions: [
-        //                 { type: 'like-o', text: '156' },
-        //                 { type: 'star-o', text: '1990' },
-        //                 { type: 'message', text: '21' },
-        //             ],
-        //         },
-        //         {
-        //             title: '奇山峻岭',
-        //             avatar: require('@/assets/img/avatar.jpg'),
-        //             picture: require('@/assets/img/test3.png'),
-        //             writer: 'heshan',
-        //             actions: [
-        //                 { type: 'like-o', text: '156' },
-        //                 { type: 'star-o', text: '156' },
-        //                 { type: 'message', text: '2' },
-        //             ],
-        //         },
-        //         {
-        //             title: '璀璨星空',
-        //             avatar: require('@/assets/img/avatar.jpg'),
-        //             picture: require('@/assets/img/test4.png'),
-        //             writer: 'heshan',
-        //             actions: [
-        //                 { type: 'like-o', text: '1256' },
-        //                 { type: 'star-o', text: '16' },
-        //                 { type: 'message', text: '26' },
-        //             ],
-        //         },
-        //         {
-        //             title: '项目介绍',
-        //             avatar: require('@/assets/img/avatar.jpg'),
-        //             picture: require('@/assets/img/logo.png'),
-        //             writer: 'heshan',
-        //             actions: [
-        //                 { type: 'like-o', text: '18' },
-        //                 { type: 'star-o', text: '120' },
-        //                 { type: 'message', text: '1283' },
-        //             ],
-        //         },
-        //     ],
-        // }
     },
     methods: {
         onclick() {
