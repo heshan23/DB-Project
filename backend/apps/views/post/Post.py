@@ -1,11 +1,16 @@
-from django.utils import timezone
-from rest_framework.response import Response
-from rest_framework.views import APIView
+from operator import itemgetter
 
-from apps.models import *
+from django.utils import timezone
+
+from apps.views.user.Account import *
 from apps.views.user.Images import image_url
 
-default_image = image_url + 'media/images/oo.jpg'
+default_image = image_url + '/media/images/default_background1.jpg'
+
+default_images = [image_url + '/media/images/default_background1.jpg',
+                  image_url + '/media/images/default_background2.jpg',
+                  image_url + '/media/images/default_background3.jpg',
+                  image_url + '/media/images/default_background4.jpg']
 
 
 class NewPost(APIView):
@@ -122,6 +127,7 @@ class PostGet(APIView):
 class QueryPost(APIView):
     def get(self, request):
         # 节约开销,首先假设这个是none
+        max_return_count = 10
         final_post = None
         good_search = True
         username = request.GET['user_name']
@@ -150,7 +156,8 @@ class QueryPost(APIView):
             print(e)
             if board_name != "":
                 good_search = False
-        tag_list = request.GET['tags']
+        tag_list = request.GET.getlist('tags[]')
+        print("this is tags :" + str(tag_list))
         try:
             # 注意,
             for tag_name in tag_list:
@@ -166,7 +173,7 @@ class QueryPost(APIView):
                     ).values_list("post", flat=True))
         except Tag.DoesNotExist as e:
             print(e)
-            if tag_list:
+            if len(tag_list) != 0:
                 good_search = False
         ret = []
         if final_post is None:
@@ -174,27 +181,37 @@ class QueryPost(APIView):
                 final_post = set(Post.objects.filter().values_list("id", flat=True))
             else:
                 final_post = []
+        i = 0
         for post_id in final_post:
             like_count = PostLike.objects.filter(post_id=post_id).count()
             comment_count = Comment.objects.filter(post_id=post_id).count()
             post = Post.objects.get(id=post_id)
             if post.image is None:
-                image = default_image
+                image = default_images[i % 4]
+                i = i + 1
             else:
                 image = post.image.img.url
+            if post.user.avatar is None:
+                avatar = default_avatar_url
+            else:
+                avatar = post.user.avatar.img.url
             ret.append({
                 "post_id": post.id,
-                "user_name": post.user.user_name,
-                "image": image,
+                "writer": post.user.user_name,
+                "avatar": avatar,
+                "picture": image,
                 "title": post.title,
                 "content": post.content,
                 "create_date": post.create_date.strftime("%Y-%m-%d %H:%I:%S"),
                 "like_count": like_count,
-                "comment_count": comment_count
+                "comment_count": comment_count,
+                "star_count": 0,
             })
+        ret.sort(key=itemgetter("like_count"))
+        ret = ret[0:max_return_count]
         return Response({
             "reason": "查询成功",
-            "data": ret,
+            "contents": ret,
         }, status=200)
 
 

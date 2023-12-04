@@ -91,31 +91,6 @@ const options = {
           ]
         },
         {
-          path: 'exception',
-          name: '异常页',
-          meta: {
-            icon: 'warning',
-          },
-          component: BlankView,
-          children: [
-            {
-              path: '404',
-              name: 'Exp404',
-              component: () => import('@/pages/exception/404')
-            },
-            {
-              path: '403',
-              name: 'Exp403',
-              component: () => import('@/pages/exception/403')
-            },
-            {
-              path: '500',
-              name: 'Exp500',
-              component: () => import('@/pages/exception/500')
-            }
-          ]
-        },
-        {
           path: 'post',
           meta: {
             icon: 'file-ppt'
