@@ -5,12 +5,12 @@ from django.utils import timezone
 from apps.views.user.Account import *
 from apps.views.user.Images import image_url
 
-default_image = image_url + 'media/images/default_background1.jpg'
+default_image = image_url + '/media/images/default_background1.jpg'
 
-default_images = [image_url + 'media/images/default_background1.jpg',
-                  image_url + 'media/images/default_background2.jpg',
-                  image_url + 'media/images/default_background3.jpg',
-                  image_url + 'media/images/default_background4.jpg']
+default_images = [image_url + '/media/images/default_background1.jpg',
+                  image_url + '/media/images/default_background2.jpg',
+                  image_url + '/media/images/default_background3.jpg',
+                  image_url + '/media/images/default_background4.jpg']
 
 
 class NewPost(APIView):
