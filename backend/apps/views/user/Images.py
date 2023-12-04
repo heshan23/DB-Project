@@ -12,7 +12,7 @@ class UploadImage(APIView):
         img = Image.objects.create(
             img=file_obj
         )
-        print(settings.MEDIA_ROOT)
+        # print(settings.MEDIA_ROOT)
         img.save()
         return Response({'reason': '上传成功',
                          "url": image_url + img.img.url, "id": img.id}, status=200)
