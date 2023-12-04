@@ -1,17 +1,10 @@
 <template>
     <div>
-        <a-list v-if="comments.length" :data-source="comments"
-            :header="`${comments.length} ${comments.length > 1 ? 'replies' : 'reply'}`" item-layout="horizontal">
-            <a-list-item slot="renderItem" >
-                <!-- slot-scope="item, index" -->
-                <a-comment :author="item.author" :avatar="item.avatar" :content="item.content" :datetime="item.datetime" />
-            </a-list-item>
-        </a-list>
         <a-comment>
-            <a-avatar slot="avatar" :src="require('@/assets/img/avatar.jpg')" alt="heshan" />
+            <a-avatar slot="avatar" :src="user_avatar" />
             <div slot="content">
                 <a-form-item>
-                    <a-textarea :rows="3" :value="value" @change="handleChange" style="background-color:aliceblue;"/>
+                    <a-textarea :rows="3" v-model="value" style="background-color:aliceblue;" />
                 </a-form-item>
                 <a-form-item>
                     <a-button html-type="submit" :loading="submitting" type="primary" @click="handleSubmit">
@@ -25,9 +18,9 @@
 <script>
 import moment from 'moment';
 export default {
+    props: ['user_avatar'],
     data() {
         return {
-            comments: [],
             submitting: false,
             value: '',
             moment,
@@ -40,24 +33,12 @@ export default {
             }
 
             this.submitting = true;
-
+            console.log(this.value);
             setTimeout(() => {
                 this.submitting = false;
-                this.comments = [
-                    {
-                        author: 'Han Solo',
-                        avatar: '@/assets/img/avatar.jpg',
-                        content: this.value,
-                        datetime: moment().fromNow(),
-                    },
-                    ...this.comments,
-                ];
                 this.value = '';
             }, 1000);
-        },
-        handleChange(e) {
-            this.value = e.target.value;
-        },
+        }
     },
 };
 </script>

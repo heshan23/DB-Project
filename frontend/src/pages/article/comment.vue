@@ -17,39 +17,77 @@
                     {{ dislikes }}
                 </span>
             </span>
-            <span key="comment-basic-reply-to">Reply to</span>
+            <span key="comment-basic-reply-to" @click="reply">Reply to</span>
         </template>
-        <a slot="author">游客</a>
-        <a-avatar slot="avatar" src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" alt="Han Solo" />
+        <a slot="author">{{ author }}</a>
+        <a-avatar slot="avatar" :src="avatar" />
         <p slot="content">
-            写的真好下次我也去！
+            {{ content }}
         </p>
         <a-tooltip slot="datetime" :title="moment().format('YYYY-MM-DD HH:mm:ss')">
             <span>{{ moment().fromNow() }}</span>
         </a-tooltip>
+        <a-modal :title="replyTitle" :visible="visible" :confirm-loading="confirmLoading" @ok="handleOk"
+            @cancel="handleCancel">
+            <a-textarea :rows="3" v-model="replyContent" style="background-color:aliceblue;" />
+        </a-modal>
     </a-comment>
 </template>
 <script>
 import moment from 'moment';
 export default {
+    //需要上传的数据是点赞的变化，可以最后根据action来判断，然后后端加一或减一或不变即可
+    //时间展示接口有待商榷
+    props: ['data'],
     data() {
         return {
-            likes: 0,
-            dislikes: 0,
+            author: this.data.author,
+            avatar: this.data.avatar,
+            content: this.data.content,
+            likes: this.data.likes,
+            dislikes: this.data.dislikes,
             action: null,
             moment,
+            visible: false,
+            confirmLoading: false,
+            replyContent: '',
         };
     },
     methods: {
         like() {
-            this.likes = 1;
-            this.dislikes = 0;
+            if (this.action == 'liked') {
+                return;
+            }
+            this.likes = this.likes + 1;
+            if (this.action == 'disliked') {
+                this.dislikes = this.dislikes - 1;
+            }
             this.action = 'liked';
         },
         dislike() {
-            this.likes = 0;
-            this.dislikes = 1;
+            if (this.action == 'disliked') {
+                return;
+            }
+            this.dislikes = this.dislikes + 1;
+            if (this.action == 'liked') {
+                this.likes = this.likes - 1;
+            }
             this.action = 'disliked';
+        },
+        reply() {
+            this.replyTitle = '回复' + this.author + ':'
+            this.visible = true
+        },
+        handleOk() {
+            this.confirmLoading = true;
+            console.log(this.replyContent)
+            setTimeout(() => {
+                this.visible = false;
+                this.confirmLoading = false;
+            }, 2000);
+        },
+        handleCancel() {
+            this.visible = false;
         },
     },
 };
