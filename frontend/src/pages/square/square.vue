@@ -20,7 +20,8 @@ export default {
     data() {
         var ret = []
         queryPost().then(res => {
-            const dataArray = res.data.content
+            console.log(res.data)
+            const dataArray = res.data.contents
             for (let i = 0, len = dataArray.length; i < len; i++) {
                 ret.push({
                     title: dataArray[i].title,
