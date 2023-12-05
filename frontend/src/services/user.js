@@ -50,6 +50,12 @@ export async function queryPost(user_name="", board="", tags=[]) {
   })
 }
 
+export async function postGet(post_id) {
+  return request(path.POSTGET, METHOD.GET, {
+    "post_id": post_id
+  })
+}
+
 export async function likePost(user_name, post_id) {
   return request(path.LIKE, METHOD.POST, {
     "user_name": user_name,
