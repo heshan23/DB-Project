@@ -105,7 +105,7 @@ class CommentLike(models.Model):
 
 
 class Tag(models.Model):
-    name = models.CharField(verbose_name="tag_name", max_length=8)
+    name = models.CharField(verbose_name="tag_name", max_length=8, unique=True)
 
     class Meta:
         db_table = "tags"
@@ -119,6 +119,7 @@ class TagPost(models.Model):
     class Meta:
         db_table = "tags_post"
         verbose_name = "tag_post"
+        unique_together = ("tag", "post")
 
 
 class Board(models.Model):
@@ -131,7 +132,7 @@ class Board(models.Model):
 
 class BoardPost(models.Model):
     board = models.ForeignKey(verbose_name="board", to=Board, on_delete=models.CASCADE, default=1)
-    post = models.ForeignKey(verbose_name="post", to=Post, on_delete=models.CASCADE, default=1)
+    post = models.OneToOneField(verbose_name="post", to=Post, on_delete=models.CASCADE, default=1)
 
     class Meta:
         db_table = "board_post"
