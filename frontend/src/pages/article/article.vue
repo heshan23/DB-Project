@@ -32,23 +32,23 @@ export default {
     commentList,
   },
   data() {
-    // let post_id = this.$route.query.post_id;
-    // console.log(post_id)
+    var post_id = this.$route.query.post_id;
+    console.log(post_id)
     // var ret
-    // postGet(post_id).then(
-    //   res => {
-    //     console.log(res.data)
-    //     const articleData = res.data.data
-    //     // this.title = res.data.title
-    //     // this.content = res.data.content
-    //     // this.images = res.data.images
-    //     // this.comments = res.data.comments
-    //   }
-    // ).catch(
-    //   err => {
-    //     console.log(err)
-    //   }
-    // )
+    postGet(post_id).then(
+      res => {
+        console.log(res.data)
+        // const articleData = res.data.data
+        // this.title = res.data.title
+        // this.content = res.data.content
+        // this.images = res.data.images
+        // this.comments = res.data.comments
+      }
+    ).catch(
+      err => {
+        console.log(err)
+      }
+    )
     return {
       user_avatar: require('@/assets/img/avatar.jpg'),
       title: '奇山峻岭',

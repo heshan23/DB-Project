@@ -26,6 +26,8 @@ export async function getRoutesConfig() {
   return request(path.ROUTES, METHOD.GET)
 }
 
+/* ----------------------------- 帖子部分 ------------------------- */
+
 export async function newPost(name, title, content, board, tags) {
   return request(path.NEWPOST, METHOD.POST, {
     "user_name": name,
@@ -37,8 +39,8 @@ export async function newPost(name, title, content, board, tags) {
 }
 
 /**
- * 查询帖子简介信息 用于展示
- * @param user_name 用户名 
+ * @brief 查询帖子简介信息 用于展示
+ * @param {string} user_name 用户名 
  * @param board 版块名
  * @param tags 标签
  */
@@ -56,6 +58,13 @@ export async function postGet(post_id) {
   })
 }
 
+/* ----------------------------- 点赞部分 ------------------------- */
+
+/**
+ * @brief 用户点赞帖子
+ * @param {string} user_name 用户名 
+ * @param {int} post_id 帖子id
+ */
 export async function likePost(user_name, post_id) {
   return request(path.LIKE, METHOD.POST, {
     "user_name": user_name,
@@ -63,6 +72,11 @@ export async function likePost(user_name, post_id) {
   })
 }
 
+/**
+ * @brief 用户取消点赞帖子
+ * @param {string} user_name 用户名 
+ * @param {int} post_id 帖子id
+ */
 export async function unlikePost(user_name, post_id) {
   return request(path.UNLIKE, METHOD.POST, {
     "user_name": user_name,
@@ -70,6 +84,11 @@ export async function unlikePost(user_name, post_id) {
   })
 }
 
+/**
+ * @brief 用户点赞评论
+ * @param {string} user_name 用户名 
+ * @param {int} comment_id 帖子id
+ */
 export async function likeComment(user_name, comment_id) {
   return request(path.LIKECOMMENT, METHOD.POST, {
     "user_name": user_name,
@@ -77,6 +96,11 @@ export async function likeComment(user_name, comment_id) {
   })
 }
 
+/**
+ * @brief 用户取消点赞评论
+ * @param {string} user_name 用户名 
+ * @param {int} comment_id 帖子id
+ */
 export async function unlikeComment(user_name, comment_id) {
   return request(path.UNLIKECOMMENT, METHOD.POST, {
     "user_name": user_name,
@@ -88,6 +112,24 @@ export async function uploadImage(file) {
   return request(path.UPLOADIMG, METHOD.POST, file)
 }
 
+/* ----------------------------- 通知部分 ------------------------- */
+/**
+ * @brief 获取某用户的消息list
+ * @param {string} user_name 用户名
+ * @return {JSON} 消息list
+ */
+export async function getNowNotice(user_name) {
+  return request(path.GETNOWNOTICE, METHOD.GET, {
+    "user_name": user_name
+  })
+}
+
+async function readNotice(user_name, notice_id) {
+  return request(path.READNOTICE, METHOD.POST, {
+    "user_name": user_name,
+    "notice_id": notice_id
+  })
+}
 /**
  * 退出登录
  */
@@ -107,5 +149,9 @@ export default {
   postGet,
   likePost,
   likeComment,
-  uploadImage
+  unlikePost,
+  unlikeComment,
+  uploadImage,
+  getNowNotice,
+  readNotice
 }
