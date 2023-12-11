@@ -1,8 +1,8 @@
 <template>
     <div class="card">
         <a-card hoverable style="width: 300px;margin: 2px;" v-for="(item, key) in contents " :key=key>
-            <img class="img" slot="cover" alt="example" :src="item.picture" @click="onclick" />
-            <a-card-meta :title=item.title :description=item.writer @click="onclick">
+            <img class="img" slot="cover" alt="example" :src="item.picture" @click="onclick(item.post_id)" />
+            <a-card-meta :title=item.title :description=item.writer @click="onclick(item.post_id)">
                 <a-avatar slot="avatar" :src=item.avatar />
             </a-card-meta>
             <template v-for="{ type, text } in item.actions" slot="actions">
@@ -46,8 +46,11 @@ export default {
         }
     },
     methods: {
-        onclick() {
-            this.$router.push("/article")
+        onclick(post_id) {
+            this.$router.push({
+                path: "/article",
+                query: { "post_id": post_id }
+            })
         }
     }
 }
