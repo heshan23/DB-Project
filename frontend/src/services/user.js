@@ -104,6 +104,7 @@ export default {
   register,
   newPost,
   queryPost,
+  postGet,
   likePost,
   likeComment,
   uploadImage

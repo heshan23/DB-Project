@@ -25,16 +25,30 @@
 <script>
 import AddComment from './addComment.vue';
 import commentList from './comment.vue';
-import { PostGet } from '../../services/user';
+import { postGet } from '../../services/user';
 export default {
   components: {
     AddComment,
     commentList,
   },
   data() {
-    var post_id = this.$route.query.post_id;
+    // let post_id = this.$route.query.post_id;
     // console.log(post_id)
-    PostGet(post_id).then().catch()
+    // var ret
+    // postGet(post_id).then(
+    //   res => {
+    //     console.log(res.data)
+    //     const articleData = res.data.data
+    //     // this.title = res.data.title
+    //     // this.content = res.data.content
+    //     // this.images = res.data.images
+    //     // this.comments = res.data.comments
+    //   }
+    // ).catch(
+    //   err => {
+    //     console.log(err)
+    //   }
+    // )
     return {
       user_avatar: require('@/assets/img/avatar.jpg'),
       title: '奇山峻岭',
