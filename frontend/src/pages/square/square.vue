@@ -19,7 +19,7 @@ import { queryPost } from '../../services/user';
 export default {
     data() {
         var ret = []
-        queryPost().then(res => {
+        queryPost(undefined, undefined, undefined).then(res => {
             console.log(res.data)
             const dataArray = res.data.contents
             for (let i = 0, len = dataArray.length; i < len; i++) {
@@ -59,7 +59,7 @@ export default {
 .card {
     display: flex;
     flex-wrap: wrap;
-    justify-content: start;
+    justify-content: flex-start;
 }
 
 .img {
