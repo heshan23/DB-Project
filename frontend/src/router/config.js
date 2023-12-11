@@ -32,14 +32,7 @@ const options = {
       component: TabsView,
       redirect: '/login',
       children: [
-        {
-          path: 'square',
-          name: '广场',
-          meta: {
-            icon: 'file-ppt'
-          },
-          component: () => import('@/pages/square')
-        },
+        'square',
         {
           path: 'parent1',
           name: '父级路由1',
@@ -48,26 +41,11 @@ const options = {
           },
           component: BlankView,
           children: [
-            {
-              path: 'demo1',
-              name: '演示页面1',
-              component: () => import('@/pages/demo'),
-            },
-            {
-              path: 'demo2',
-              name: '演示页面2',
-              component: () => import('@/pages/demo'),
-            },
-            {
-              path: 'demo3',
-              name: '演示页面3',
-              component: () => import('@/pages/demo'),
-            },
-            {
-              path: 'demo4',
-              name: '演示页面4',
-              component: () => import('@/pages/demo'),
-            }
+            'board1',
+            'board2',
+            'board3',
+            'board4',
+            'board5'
           ]
         },
         {
@@ -78,16 +56,12 @@ const options = {
           },
           component: PageView,
           children: [
-            {
-              path: 'demo5',
-              name: 'children1',
-              component: () => import('@/pages/demo'),
-            },
-            {
-              path: 'demo6',
-              name: 'children2',
-              component: () => import('@/pages/demo'),
-            }
+            'find_article',
+            // {
+            //   path: 'demo6',
+            //   name: 'children2',
+            //   component: () => import('@/pages/demo'),
+            // }
           ]
         },
         {

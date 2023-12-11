@@ -45,9 +45,9 @@ const routerMap = {
     component: view.blank
   },
   parent2: {
-    name: '控制面板',
+    name: '查询',
     icon: 'form',
-    component: view.page
+    component: view.blank
   },
   exception: {
     name: '异常页',
@@ -76,13 +76,35 @@ const routerMap = {
     path: '/article',
     component: () => import('@/pages/article')
   },
-  demo1: {
-    path: '/demo1',
-    component: () => import('@/pages/demo')
+  board1:{
+    path:'/board1',
+    name:'休闲娱乐',
+    component: () => import('@/pages/board1')
   },
-  demo2: {
-    path: '/demo2',
-    component: () => import('@/pages/square')
+  board2:{
+    path:'/board2',
+    name:'信息科技',
+    component: () => import('@/pages/board2')
+  },
+  board3:{
+    path:'/board3',
+    name:'生活时尚',
+    component: () => import('@/pages/board3')
+  },
+  board4:{
+    path:'/board4',
+    name:'课程交流',
+    component: () => import('@/pages/board4')
+  },
+  board5:{
+    path:'/board5',
+    name:'原神天地',
+    component: () => import('@/pages/board5')
+  },
+  find_article:{
+    path:'/find_article',
+    name:'查询文章',
+    component:()=>import('@/pages/find_article')
   }
 }
 export default routerMap
