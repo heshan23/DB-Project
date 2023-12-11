@@ -2,10 +2,10 @@
     <div class="fullPage">
         <div class="profileTop">
             <div class="user_info">
-                <img class="user_avatar" src="@/assets/img/avatar.jpg" />
+                <img class="user_avatar" :src=avatar />
                 <div class="userText">
                     <div class="userName">
-                        <span>{{ username }}</span>
+                        <span>{{ user_name }}</span>
                     </div>
                     <div class="signature">
                         <span>个性签名：{{ signature }}</span>
@@ -63,10 +63,15 @@
 <script>
 import { editProfile, logout } from '@/services/user'
 import { mapGetters } from 'vuex';
+// import { state } from '../../store/index'
 export default {
     data() {
+        const user_data = JSON.parse(localStorage.getItem('admin.user'))
+        console.log(user_data)
         return {
-            username: "heshan",
+            user_name: user_data.user_name,
+            // username: this.user.user_name,
+            avatar: user_data.avatar,
             signature: "you",
             loading: false,
             visible: false,
