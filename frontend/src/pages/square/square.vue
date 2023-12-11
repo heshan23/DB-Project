@@ -1,59 +1,11 @@
 <template>
     <div class="card">
-        <a-card hoverable style="width: 300px;">
-            <img slot="cover" alt="example" src="@/assets/img/logo.png" @click="onclick" />
-            <a-card-meta :title=title :description=writer @click="onclick">
-                <a-avatar slot="avatar" :src="require('@/assets/img/avatar.jpg')" />
+        <a-card hoverable style="width: 300px;margin: 2px;" v-for="(item, key) in contents " :key=key>
+            <img class="img" slot="cover" alt="example" :src="item.picture" @click="onclick(item.post_id)" />
+            <a-card-meta :title=item.title :description=item.writer @click="onclick(item.post_id)">
+                <a-avatar slot="avatar" :src=item.avatar />
             </a-card-meta>
-            <template v-for="{ type, text } in actions" slot="actions">
-                <span :key="type">
-                    <a-icon :type="type" style="margin-right: 8px" />
-                    {{ text }}
-                </span>
-            </template>
-        </a-card>
-        <a-card hoverable style="width: 300px">
-            <img slot="cover" alt="example" src="@/assets/img/logo.png" @click="onclick" />
-            <a-card-meta :title=title :description=writer @click="onclick">
-                <a-avatar slot="avatar" :src="require('@/assets/img/avatar.jpg')" />
-            </a-card-meta>
-            <template v-for="{ type, text } in actions" slot="actions">
-                <span :key="type">
-                    <a-icon :type="type" style="margin-right: 8px" />
-                    {{ text }}
-                </span>
-            </template>
-        </a-card>
-        <a-card hoverable style="width: 300px">
-            <img slot="cover" alt="example" src="@/assets/img/logo.png" @click="onclick" />
-            <a-card-meta :title=title :description=writer @click="onclick">
-                <a-avatar slot="avatar" :src="require('@/assets/img/avatar.jpg')" />
-            </a-card-meta>
-            <template v-for="{ type, text } in actions" slot="actions">
-                <span :key="type">
-                    <a-icon :type="type" style="margin-right: 8px" />
-                    {{ text }}
-                </span>
-            </template>
-        </a-card>
-        <a-card hoverable style="width: 300px">
-            <img slot="cover" alt="example" src="@/assets/img/logo.png" @click="onclick" />
-            <a-card-meta :title=title :description=writer @click="onclick">
-                <a-avatar slot="avatar" :src="require('@/assets/img/avatar.jpg')" />
-            </a-card-meta>
-            <template v-for="{ type, text } in actions" slot="actions">
-                <span :key="type">
-                    <a-icon :type="type" style="margin-right: 8px" />
-                    {{ text }}
-                </span>
-            </template>
-        </a-card>
-        <a-card hoverable style="width: 300px">
-            <img slot="cover" alt="example" src="@/assets/img/logo.png" @click="onclick" />
-            <a-card-meta :title=title :description=writer @click="onclick">
-                <a-avatar slot="avatar" :src="require('@/assets/img/avatar.jpg')" />
-            </a-card-meta>
-            <template v-for="{ type, text } in actions" slot="actions">
+            <template v-for="{ type, text } in item.actions" slot="actions">
                 <span :key="type">
                     <a-icon :type="type" style="margin-right: 8px" />
                     {{ text }}
@@ -63,23 +15,42 @@
     </div>
 </template>
 <script>
+import { queryPost } from '../../services/user';
 export default {
     data() {
+        var ret = []
+        queryPost(undefined, undefined, undefined).then(res => {
+            console.log(res.data)
+            const dataArray = res.data.contents
+            for (let i = 0, len = dataArray.length; i < len; i++) {
+                ret.push({
+                    title: dataArray[i].title,
+                    avatar: dataArray[i].avatar,
+                    picture: dataArray[i].picture,
+                    writer: dataArray[i].writer,
+                    actions: [
+                        { type: 'like-o', text: dataArray[i].like_count },
+                        { type: 'star-o', text: dataArray[i].star_count },
+                        { type: 'message', text: dataArray[i].comment_count },
+                    ],
+                    post_id: dataArray[i].post_id
+                })
+            }
+            console.log(ret)
+        }).catch(err => {
+            console.log(err)
+            this.error("请求失败, 请尝试刷新页面", 1);
+        })
         return {
-            title: '项目介绍',
-            //avatar:'@/assets/img/avatar.jpg',
-            //picture:'@/assets/img/logo.png',
-            writer: 'heshan',
-            actions: [
-                { type: 'like-o', text: '156' },
-                { type: 'star-o', text: '156' },
-                { type: 'message', text: '2' },
-            ],
+            contents: ret
         }
     },
     methods: {
-        onclick() {
-            this.$router.push("/article")
+        onclick(post_id) {
+            this.$router.push({
+                path: "/article",
+                query: { "post_id": post_id }
+            })
         }
     }
 }
@@ -88,7 +59,11 @@ export default {
 .card {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: flex-start;
+}
+
+.img {
+    height: 310px;
 }
 </style>  
 

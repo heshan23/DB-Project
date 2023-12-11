@@ -4,7 +4,6 @@ from rest_framework.views import APIView
 from apps.models import *
 from apps.views.user.Images import image_url
 
-
 # Response默认第一个参数是data
 
 default_avatar_url = image_url + "/media/images/default_avator.jpg"
@@ -37,7 +36,7 @@ class UserSignIn(APIView):
         if user.avatar is None:
             avatar = default_avatar_url
         else:
-            avatar = user.avatar.img.url
+            avatar = image_url + user.avatar.img.url
         ret = {"user_name": user.user_name, "avatar": avatar, "email": user.email}
         return Response({"reason": "登录成功", "user": ret}, status=200)
 
@@ -102,7 +101,7 @@ class YourAccountMessage(APIView):
             if user.avatar is None:
                 avatar = default_avatar_url
             else:
-                avatar = user.avatar.img.url
+                avatar = image_url+user.avatar.img.url
             ret_data = {
                 "user_name": user.user_name,
                 "user_email": user.email,
@@ -119,3 +118,27 @@ class RemoveUser(APIView):
         user = User.objects.get(id=user_id)
         user.delete()
         return Response({"reason": "账号注销成功"}, status=200)
+
+
+class UploadAvator(APIView):
+    def post(self, request):
+        try:
+            user_name = request.data["user_name"]
+        except KeyError:
+            return Response({"reason": "检查格式是否有user_name"}, status=422)
+        try:
+            user = User.objects.get(user_name=user_name)
+        except User.DoesNotExist:
+            return Response({"reason": "错误,该用户不存在"}, status=404)
+        file_obj = request.FILES.get('avator')
+        img = Image.objects.create(
+            img=file_obj
+        )
+        img.save()
+        try:
+            user.avatar = img
+            user.save()
+        except Exception as e:
+            print(e)
+            return Response({"reason": str(e)}, status=500)
+        return Response({"reason": "成功修改", "avator": image_url + img.img.url}, status=200)
