@@ -213,7 +213,7 @@ class QueryPost(APIView):
                 "comment_count": comment_count,
                 "star_count": 0,
             })
-        ret = sample(ret, max(max_return_count, len(ret)))
+        ret = sample(ret, min(max_return_count, len(ret)))
         ret.sort(key=itemgetter("like_count"))
         return Response({
             "reason": "查询成功",
