@@ -101,7 +101,7 @@ class YourAccountMessage(APIView):
             if user.avatar is None:
                 avatar = default_avatar_url
             else:
-                avatar = user.avatar.img.url
+                avatar = image_url+user.avatar.img.url
             ret_data = {
                 "user_name": user.user_name,
                 "user_email": user.email,
