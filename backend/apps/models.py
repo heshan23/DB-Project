@@ -50,8 +50,6 @@ class Post(models.Model):
     create_date = models.DateField(verbose_name="created_date")
     user = models.ForeignKey(verbose_name="user_poster_id", to=User,
                              on_delete=models.CASCADE, default=1)
-    image = models.ForeignKey(verbose_name="post_image", to=Image, null=True,
-                              on_delete=models.SET_NULL, default=None)
 
     class Meta:
         db_table = "posts"
@@ -59,6 +57,14 @@ class Post(models.Model):
 
     def __str__(self):
         return str(self.id) + " " + str(self.title)
+
+
+class PostImage(models.Model):
+    post = models.ForeignKey(verbose_name="post", to=Post, on_delete=models.CASCADE, default=1)
+    img = models.ForeignKey(verbose_name="image", to=Image, on_delete=models.CASCADE, default=1)
+
+    class Meta:
+        db_table = "post_image"
 
 
 class PostLike(models.Model):

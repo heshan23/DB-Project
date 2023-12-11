@@ -10,7 +10,7 @@
                         </a-input>
                     </a-form-item>
                     <div>
-                        <a-radio-group default-value="a" button-style="solid" v-model="value">
+                        <a-radio-group button-style="solid" v-model="value">
                             <a-radio-button value="休闲娱乐">
                                 休闲娱乐
                             </a-radio-button>
@@ -22,6 +22,9 @@
                             </a-radio-button>
                             <a-radio-button value="课程交流">
                                 课程交流
+                            </a-radio-button>
+                            <a-radio-button value="原神天地">
+                                原神天地
                             </a-radio-button>
                         </a-radio-group>
                     </div>
@@ -99,7 +102,8 @@ export default {
                     })
                 }
             })
-        }, handleTagChange(tag, checked) {
+        },
+        handleTagChange(tag, checked) {
             const { selectedTags } = this;
             const nextSelectedTags = checked
                 ? [...selectedTags, tag]

@@ -9,39 +9,21 @@ Mock.mock(`${process.env.VUE_APP_API_BASE_URL}/routes`, 'get', () => {
       {
         router: 'parent1',
         children: [
-          {
-            router: 'demo1',
-            name: '休闲娱乐',
-            authority: {
-              permission: 'demo',
-              role: 'admin'
-            }
-          },
-          {
-            router: 'demo2',
-            name: '信息科技'
-          },
-          {
-            router: 'demo3',
-            name: '生活时尚'
-          },
-          {
-            router: 'demo4',
-            name: '课程交流'
-          }
+          'board1',
+          'board2',
+          'board3',
+          'board4',
+          'board5'
         ]
       },
       {
         router: 'parent2',
         children: [
-          {
-            router: 'demo5',
-            name: '查询文章'
-          },
-          {
-            router: 'demo6',
-            name: '查询用户'
-          }
+          'find_article'
+          // {
+          //   router: 'demo6',
+          //   name: '查询用户'
+          // }
         ]
       },
       'post',
