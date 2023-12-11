@@ -2,3 +2,8 @@ node_modules
 backend/media/images/*
 !backend/media/images/default_avator.jpg
 backend/apps/__pycache__
+backend/apps/__pycache__/*
+backend/apps/views/user/__pycache__/*
+backend/apps/migrations/__pycache__/*
+backend/apps/views/post/__pycache__/*
+backend/apps/views/notice/__pycache__/*
