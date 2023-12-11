@@ -122,7 +122,7 @@ export default {
             this.visible = false
         },
         handleCreate() {
-            const beforename = "y";
+            const beforename = this.user.user_name;
             const name = this.form.getFieldValue('new_name');
             // 目前没有对旧密码校验
             // const oldPassword = this.form.getFieldValue('旧密码');
