@@ -1,4 +1,5 @@
 from operator import itemgetter
+from random import sample
 
 from django.utils import timezone
 
@@ -72,7 +73,12 @@ class NewPost(APIView):
 # 这种查询应该是获取的简要信息，比如点赞数，评论数，然后前端选择性展示文章内容
 # 而不必要全把评论展示出来
 class PostGet(APIView):
-    def get(self, request, post_id):
+    def get(self, request):
+        try:
+            post_id = request.GET['post_id']
+            print(request.GET)
+        except KeyError:
+            return Response({"reason": "格式错误，检查是否有post_id"})
         try:
             post = Post.objects.get(id=post_id)
         except Post.DoesNotExist:
@@ -86,7 +92,7 @@ class PostGet(APIView):
             if post.image is None:
                 image = default_image
             else:
-                image = post.image.img.url
+                image = image_url + post.image.img.url
             for tag in tag_post:
                 tags.append(tag.tag.name)
             for comment in post_comments:
@@ -98,9 +104,9 @@ class PostGet(APIView):
                 comments.append({
                     "comment_id": comment.id,
                     "user_name": comment.user.user_name,
-                    "create_date": comment.create_date,
+                    "create_date": comment.create_date.strftime("%Y-%m-%d %H:%I:%S"),
                     "content": comment.content,
-                    "append": append,
+                    "reply": str(append),
                 })
         except Exception as e:
             print(e)
@@ -190,11 +196,11 @@ class QueryPost(APIView):
                 image = default_images[i % 4]
                 i = i + 1
             else:
-                image = post.image.img.url
+                image = image_url + post.image.img.url
             if post.user.avatar is None:
                 avatar = default_avatar_url
             else:
-                avatar = post.user.avatar.img.url
+                avatar = image_url + post.user.avatar.img.url
             ret.append({
                 "post_id": post.id,
                 "writer": post.user.user_name,
@@ -207,8 +213,8 @@ class QueryPost(APIView):
                 "comment_count": comment_count,
                 "star_count": 0,
             })
+        ret = sample(ret, min(max_return_count, len(ret)))
         ret.sort(key=itemgetter("like_count"))
-        ret = ret[0:max_return_count]
         return Response({
             "reason": "查询成功",
             "contents": ret,
