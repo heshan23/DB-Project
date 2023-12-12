@@ -56,7 +56,8 @@ export default {
     methods: {
         like() {
             if (this.action == 'liked') {
-                return;
+                this.likes = this.likes - 1;
+                this.action = null;
             }
             this.likes = this.likes + 1;
             if (this.action == 'disliked') {
@@ -66,7 +67,8 @@ export default {
         },
         dislike() {
             if (this.action == 'disliked') {
-                return;
+                this.dislikes = this.dislikes - 1;
+                this.action = null;
             }
             this.dislikes = this.dislikes + 1;
             if (this.action == 'liked') {
