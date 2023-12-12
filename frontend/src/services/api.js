@@ -12,6 +12,8 @@ module.exports = {
   NEWPOST: `${BASE_URL}/Post/NewPost/`,
   QUERYPOST: `${BASE_URL}/Post/QueryPost/`,
   POSTGET: `${BASE_URL}/Post/PostGet/`,
+  NEWCOMMENT: `${BASE_URL}/Post/NewComment/`,
+
   LIKE: `${BASE_URL}/Post/Like/`,
   LIKECOMMENT: `${BASE_URL}/Post/LikeComment/`,
   UNLIKE: `${BASE_URL}/Post/Unlike/`,
