@@ -45,7 +45,7 @@ export default {
             avatar: this.data.avatar,
             content: this.data.content,
             likes: this.data.likes,
-            dislikes: this.data.dislikes,
+            dislikes: 0,// 将废弃
             action: null,
             moment,
             visible: false,
