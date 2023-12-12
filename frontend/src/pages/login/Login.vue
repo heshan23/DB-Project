@@ -1,4 +1,5 @@
 <template>
+  <!-- <div class="login-container"> -->
   <common-layout>
     <div class="top">
       <div class="header">
@@ -64,6 +65,7 @@
       </a-form>
     </div>
   </common-layout>
+  <!-- </div> -->
 </template>
 
 <script>
@@ -135,7 +137,16 @@ export default {
 
 
 <style lang="less" scoped>
+// .login-container {
+//   background-image: url('../../assets/img/login-background.png');
+//   background-size: cover;
+//   /* 其他样式属性 */
+// }
+
 .common-layout {
+  // background-image: url('../../assets/img/login-background.png');
+  // background-size: cover;
+
   .top {
     text-align: center;
 

@@ -7,9 +7,9 @@ module.exports = {
 
   LOGIN: `${BASE_URL}/User/SignIn/`,
   REGISTER: `${BASE_URL}/User/SignUp/`,
-  EDITPROFILE: `${BASE_URL}//User/EditProfile/`,
-
+  EDITPROFILE: `${BASE_URL}/User/EditProfile/`,
   NEWPOST: `${BASE_URL}/Post/NewPost/`,
+  DELETEPOST: `${BASE_URL}/Post/DeletePost/`,
   QUERYPOST: `${BASE_URL}/Post/QueryPost/`,
   POSTGET: `${BASE_URL}/Post/PostGet/`,
   NEWCOMMENT: `${BASE_URL}/Post/NewComment/`,

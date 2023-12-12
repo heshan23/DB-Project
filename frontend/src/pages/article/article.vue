@@ -8,11 +8,10 @@
       </a-carousel>
     </a-col>
     <a-col :span="10" class="right_part">
-      <div style="margin-top: 10px;margin-left: 10px;margin-bottom: 20px;">
+      <div style="margin-top: 10px;margin-left: 10px;margin-bottom: 20px;margin-right: 10px;">
         <a-avatar slot="avatar" :src="writer_avatar" />
         <span style="font-size: larger; font-weight: 600;margin-left: 10px;">{{ writer }}</span>
-        <a-button html-type="submit" :loading="submitting" type="primary" @click="handleLike"
-          style="margin-left:  450px;">
+        <a-button html-type="submit" :loading="submitting" type="primary" @click="handleLike" style="float: right;">
           <span v-if="liked">已点赞</span>
           <span v-else>点赞</span>
         </a-button>
@@ -54,7 +53,7 @@ export default {
         this.$data.user_avatar = this.user.avatar
         this.$data.title = articleData.title
         this.$data.content = articleData.content
-        this.$data.comments = articleData.comments
+        // this.$data.comments = articleData.comments
         this.$data.images = []
         this.$data.moment = articleData.create_date
         for (let i = 0; i < articleData.images.length; i++) {
@@ -67,7 +66,7 @@ export default {
             avatar: articleData.comments[i].avatar,
             content: articleData.comments[i].content,
             likes: articleData.comments[i].likes,
-            dislikes: articleData.comments[i].dislikes,
+            // dislikes: articleData.comments[i].dislikes,
             moment: articleData.comments[i].create_date
           })
         }

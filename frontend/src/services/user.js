@@ -26,6 +26,13 @@ export async function getRoutesConfig() {
   return request(path.ROUTES, METHOD.GET)
 }
 
+export async function editProfile(before_name, name, password) {
+  return request(path.EDITPROFILE, METHOD.POST, {
+    "before_name": before_name, // 旧用户名
+    "new_name": name,
+    "new_password": password
+  })
+}
 /* ----------------------------- 帖子部分 ------------------------- */
 
 export async function newPost(name, title, content, board, tags) {
@@ -39,10 +46,23 @@ export async function newPost(name, title, content, board, tags) {
 }
 
 /**
+ * @brief 删除帖子
+ * @param {string} user_name 用户名
+ * @param {int} post_id 帖子id
+ * @return {JSON} 删除结果
+ */
+export async function deletePost(user_name, post_id) {
+  return request(path.DELETEPOST, METHOD.POST, {
+    "user_name": user_name,
+    "post_id": post_id
+  })
+}
+
+/**
  * @brief 查询帖子简介信息 用于展示
  * @param {string} user_name 用户名 
- * @param board 版块名
- * @param tags 标签
+ * @param {string} board 版块名
+ * @param {array} tags 标签
  */
 export async function queryPost(title_keyword="",user_name="", board="", tags=[]) {
   return request(path.QUERYPOST, METHOD.GET, {

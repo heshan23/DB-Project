@@ -14,6 +14,7 @@ urlpatterns = [
     # 用户点赞帖子
     path('Like/', Like.as_view()),
     path('UnLike/', UnLike.as_view()),
+    path('hasLiked/',hasLike.as_view()),
     # 用户收藏
     path('Collection/', DOCollection.as_view()),
     path('UnCollection/', UnCollection.as_view()),

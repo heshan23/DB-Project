@@ -41,15 +41,11 @@ export default {
     props: ['data'],
     data() {
         return {
-            // author: this.data.author,
-            // avatar: this.data.avatar,
-            // content: this.data.content,
-            // likes: this.data.likes,
-            author: "test",
-            avatar: "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
-            content: "test",
-            likes: 0,// 将废弃
-            dislikes: 0,// 将废弃
+            author: this.data.author,
+            avatar: this.data.avatar,
+            content: this.data.content,
+            likes: this.data.likes,
+            dislikes: 0,
             action: null,
             moment,
             visible: false,
