@@ -52,6 +52,7 @@ export default {
                  * 使用 res.data.url 获取图片地址
                  * 使用 res.data.id 获取图片id (用作查询图片的 url)
                  */
+                this.$emit('upload', res.data.id)
             }
             ).catch((err) => {
                 this.$message.error(err.response.code)
@@ -72,7 +73,7 @@ export default {
         },
         handleRemove(file) {
             let index = this.fileList.indexOf(file)
-            const uid=file.uid
+            const uid = file.uid
             console.log(uid)
             let newFileList = this.fileList.slice()
             newFileList.splice(index, 1)

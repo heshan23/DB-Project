@@ -31,7 +31,7 @@
                     <a-textarea placeholder="请输入正文" v-model="content" :auto-size="{ minRows: 12, maxRows: 20 }"
                         style="width: 790px;" />
                     <a-divider />
-                    <postImage />
+                    <postImage v-on:upload="getImageId" />
                     <div>
                         <span :style="{ marginRight: 8 }">标签:</span>
                         <template v-for="tag in tags">
@@ -69,6 +69,7 @@ export default {
             value: '休闲娱乐',
             tags: ['学习交流', '美食分享', '生活经验', '物品交换'],
             selectedTags: [],
+            image_ids: [],
             rules: {
                 title: {
                     rules: [{ required: true, message: '标题不能为空', whitespace: true }],
@@ -93,9 +94,11 @@ export default {
                     const content = this.content
                     const block_name = this.value
                     const tag_name = this.selectedTags//返回一个数组
-                    newPost(name, title, content, block_name, tag_name).then(() => {
+                    const image_ids = this.image_ids
+                    newPost(name, title, content, block_name, tag_name, image_ids).then(() => {
                         this.$message.success('发帖成功！', 1)
                         this.$router.push('/square')
+                        this.image_ids = []
                     }).catch((err) => {
                         this.error = err.code
                         this.$message.error(err.response.data.reason, 1);
@@ -111,6 +114,10 @@ export default {
             console.log('You are interested in: ', nextSelectedTags);
             this.selectedTags = nextSelectedTags;
         },
+        getImageId(data) {
+            console.log(data)
+            this.image_ids.push(data)
+        }
     }
 }
 </script>

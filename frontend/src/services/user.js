@@ -35,13 +35,14 @@ export async function editProfile(before_name, name, password) {
 }
 /* ----------------------------- 帖子部分 ------------------------- */
 
-export async function newPost(name, title, content, board, tags) {
+export async function newPost(name, title, content, board, tags, image_ids) {
   return request(path.NEWPOST, METHOD.POST, {
     "user_name": name,
     "title": title,
     "content": content,
     "board": board,
-    "tags": tags
+    "tags": tags,
+    "image_ids": image_ids
   })
 }
 
@@ -161,10 +162,11 @@ export async function getNowNotice(user_name) {
   })
 }
 
-async function readNotice(user_name, notice_id) {
+export async function readNotice(user_name, notice_id) {
+  // console.log("readNotice", user_name, notice_id)
   return request(path.READNOTICE, METHOD.POST, {
     "user_name": user_name,
-    "notice_id": notice_id
+    "message_id": notice_id
   })
 }
 /**
