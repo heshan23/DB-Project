@@ -59,13 +59,16 @@
                                     {{ text }}
                                 </span>
                             </template>
-                            <img slot="extra" style="width: 200px;height: 180px;" alt="logo" :src="item.picture" />
+                            <img slot="extra" style="width: 200px;height: 180px;" alt="logo" :src="item.picture"
+                                @click="onClick(item.post_id)" />
                             <a-list-item-meta>
                                 <a slot="title">{{ item.writer }}</a>
                                 <a-avatar slot="avatar" :src="item.avatar" />
                             </a-list-item-meta>
-                            <h1>{{ item.title }}</h1>
-                            {{ item.content }}
+                            <div @click="onClick(item.post_id)">
+                                <h1>{{ item.title }}</h1>
+                                {{ item.content }}
+                            </div>
                         </a-list-item>
                     </a-list>
                 </div>
@@ -161,6 +164,12 @@ export default {
             console.log('You are interested in: ', nextSelectedTags);
             this.selectedTags = nextSelectedTags;
         },
+        onClick(post_id) {
+            this.$router.push({
+                path: "/article",
+                query: { "post_id": post_id }
+            })
+        }
     }
 }
 </script>
