@@ -11,11 +11,9 @@ urlpatterns = [
     path('SignIn/', UserSignIn.as_view()),
     path('EditProfile/', EditProfile.as_view()),
     path('YourAccountMessage/', YourAccountMessage.as_view()),
-    # 用户点赞
+    # 用户点赞帖子
     path('Like/', Like.as_view()),
     path('UnLike/', UnLike.as_view()),
-    path('LikeComment/', LikeComment.as_view()),
-    path('UnLikeComment/', UnLikeComment.as_view()),
     # 用户收藏
     path('Collection/', DOCollection.as_view()),
     path('UnCollection/', UnCollection.as_view()),

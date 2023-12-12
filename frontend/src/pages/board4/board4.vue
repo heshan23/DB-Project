@@ -17,9 +17,9 @@
 <script>
 import { queryPost } from '../../services/user';
 export default {
-    created() {
+    data() {
         var ret = []
-        queryPost().then(res => {
+        queryPost(undefined,undefined, "课程交流", undefined).then(res => {
             console.log(res.data)
             const dataArray = res.data.contents
             for (let i = 0, len = dataArray.length; i < len; i++) {
@@ -41,11 +41,8 @@ export default {
             console.log(err)
             this.error("请求失败, 请尝试刷新页面", 1);
         })
-        this.$data.contents = ret
-    },
-    data() {
         return {
-            contents: []
+            contents: ret
         }
     },
     methods: {

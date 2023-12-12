@@ -51,8 +51,9 @@ export async function newPost(name, title, content, board, tags) {
  * @param board 版块名
  * @param tags 标签
  */
-export async function queryPost(user_name="", board="", tags=[]) {
+export async function queryPost(title_keyword="",user_name="", board="", tags=[]) {
   return request(path.QUERYPOST, METHOD.GET, {
+    "title_keyword":title_keyword,
     "user_name": user_name,
     "board": board,
     "tags": tags

@@ -7,14 +7,14 @@ from apps.models import *
 class Like(APIView):
     def post(self, request):
         try:
-            user_id = str(request.data["user_id"])
+            user_name = str(request.data["user_name"])
             post_id = str(request.data["post_id"])
         except KeyError:
             return Response({"reason": "keyError,请检查发送的信息是否有user_id,post_id"},
                             status=422)
         try:
             user = User.objects.get(
-                id=user_id
+                user_name=user_name
             )
             post = Post.objects.get(
                 id=post_id
@@ -37,14 +37,14 @@ class Like(APIView):
 class UnLike(APIView):
     def post(self, request):
         try:
-            user_id = str(request.data["user_id"])
+            user_name = str(request.data["user_name"])
             post_id = str(request.data["post_id"])
         except KeyError:
             return Response({"reason": "keyError,请检查发送的信息是否有user_id,post_id"},
                             status=422)
         try:
             user = User.objects.get(
-                id=user_id
+                user_name=user_name
             )
             post = Post.objects.get(
                 id=post_id
@@ -67,14 +67,15 @@ class UnLike(APIView):
 class LikeComment(APIView):
     def post(self, request):
         try:
-            user_id = str(request.data["user_id"])
+            user_name = str(request.data["user_name"])
             comment_id = str(request.data["comment_id"])
+            print(user_name+str(comment_id))
         except KeyError:
             return Response({"reason": "keyError,请检查发送的信息是否有user_id,comment_id"},
                             status=422)
         try:
             user = User.objects.get(
-                id=user_id
+                user_name=user_name
             )
             comment = Comment.objects.get(
                 id=comment_id
@@ -97,14 +98,14 @@ class LikeComment(APIView):
 class UnLikeComment(APIView):
     def post(self, request):
         try:
-            user_id = str(request.data["user_id"])
+            user_name = str(request.data["user_name"])
             comment_id = str(request.data["comment_id"])
         except KeyError:
             return Response({"reason": "keyError,请检查发送的信息是否有user_id,comment_id"},
                             status=422)
         try:
             user = User.objects.get(
-                id=user_id
+                user_name=user_name
             )
             comment = Comment.objects.get(
                 id=comment_id
