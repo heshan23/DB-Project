@@ -283,3 +283,21 @@ class ModifyPost(APIView):
         post.create_date = timezone.now()
         post.save()
         return Response({"reason": "修改成功"}, status=200)
+
+
+class DeletePost(APIView):
+    def post(self, request):
+        try:
+            print(request.data)
+            post_id = request.data['post_id']
+            user_name = request.data['user_name']
+        except KeyError:
+            return Response({"reason": "检查是否提供了user_name和post_id"}, status=422)
+        try:
+            post = Post.objects.get(id=post_id)
+        except Post.DoesNotExist:
+            return Response({"reason": "不存在该帖子"}, status=404)
+        if user_name != post.user.user_name:
+            return Response({"reason": "用户无权删除该帖子"}, 403)
+        post.delete()
+        return Response({"reason": "帖子删除成功"}, status=200)
