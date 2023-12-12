@@ -8,6 +8,16 @@
       </a-carousel>
     </a-col>
     <a-col :span="10" class="right_part">
+      <div style="margin-top: 10px;margin-left: 10px;margin-bottom: 20px;">
+        <a-avatar slot="avatar" :src="writer_avatar" />
+        <span style="font-size: larger; font-weight: 600;margin-left: 10px;">{{ writer }}</span>
+        <a-button html-type="submit" :loading="submitting" type="primary" @click="handleLike"
+          style="margin-left:  450px;">
+          <span v-if="liked">已点赞</span>
+          <span v-else>点赞</span>
+        </a-button>
+      </div>
+      <a-divider />
       <div style="margin-left: 20px; margin-right: 20px;">
         <h1 class="title">{{ title }}</h1>
         <span class="content">
@@ -25,7 +35,7 @@
 <script>
 import AddComment from './addComment.vue';
 import commentList from './comment.vue';
-import { postGet } from '../../services/user';
+import { postGet, likePost, unlikePost } from '../../services/user';
 import { mapGetters } from 'vuex';
 export default {
   components: {
@@ -39,6 +49,8 @@ export default {
       res => {
         const articleData = res.data.data
         console.log(articleData)
+        this.$data.writer = articleData.user_name
+        this.$data.writer_avatar = articleData.user_avatar
         this.$data.user_avatar = this.user.avatar
         this.$data.title = articleData.title
         this.$data.content = articleData.content
@@ -74,6 +86,8 @@ export default {
     var post_id = this.$route.query.post_id;
     console.log(post_id)
     return {
+      writer: '',
+      writer_avatar: '',
       post_id: post_id,
       user_avatar: require('@/assets/img/avatar.jpg'),
       title: "黄山",
@@ -100,8 +114,19 @@ export default {
         //   dislikes: 20,
         //   // moment,
         // },
-      ]
+      ],
+      liked: false,
     }
+  },
+  methods: {
+    handleLike() {
+      this.liked = !this.liked;
+      if (this.liked) {
+        likePost(this.user.user_name, this.post_id)
+      } else {
+        unlikePost(this.user.user_name, this.post_id)
+      }
+    },
   }
 }
 </script>
