@@ -79,6 +79,22 @@ export async function postGet(post_id) {
   })
 }
 
+/**
+ * @brief 新增评论
+ * @param {string} user_name 用户名 
+ * @param {int} post_id 帖子id
+ * @param {string} content 评论内容
+ * @param {int} res_id 回复的评论id(可选)
+ */
+export async function newComment(user_name, post_id, content, res_id=null) {
+  return request(path.NEWCOMMENT, METHOD.POST, {
+    "user_name": user_name,
+    "post_id": post_id,
+    "content": content,
+    "res_id": res_id
+  })
+}
+
 /* ----------------------------- 点赞部分 ------------------------- */
 
 /**
