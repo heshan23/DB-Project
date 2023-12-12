@@ -7,4 +7,5 @@ urlpatterns = [
     path('AddAnn/', AddAnn.as_view()),
     path('GetNowNotice/', GetNowNotice.as_view()),
     path('GetNowAnn/', GetNowAnn.as_view()),
+    path('ReadNotice/', ReadNotice.as_view())
 ]
