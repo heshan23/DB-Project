@@ -263,7 +263,7 @@ export default {
     border-radius: 5px;
 }
 
-.profileStatistic {
+/* .profileStatistic {
     width: 1000px;
     height: 70px;
     background-color: #ffffff;
@@ -284,16 +284,10 @@ export default {
     margin-left: 20px;
     align-items: center;
     justify-content: center;
-}
+} */
 
 .myPosts {
-    /* width: 1000px; */
     background-color: #ffffff;
-    /* position: absolute; */
-    /* left: 50%; */
-    /* transform: translateX(-50%); */
-    /* display: flex; */
-    /* border-radius: 5px; */
 }
 
 /* .Information {

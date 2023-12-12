@@ -53,7 +53,7 @@ export default {
         this.$data.user_avatar = this.user.avatar
         this.$data.title = articleData.title
         this.$data.content = articleData.content
-        this.$data.comments = articleData.comments
+        // this.$data.comments = articleData.comments
         this.$data.images = []
         this.$data.moment = articleData.create_date
         for (let i = 0; i < articleData.images.length; i++) {
@@ -66,7 +66,7 @@ export default {
             avatar: articleData.comments[i].avatar,
             content: articleData.comments[i].content,
             likes: articleData.comments[i].likes,
-            dislikes: articleData.comments[i].dislikes,
+            // dislikes: articleData.comments[i].dislikes,
             moment: articleData.comments[i].create_date
           })
         }
