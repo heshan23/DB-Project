@@ -8,11 +8,10 @@
       </a-carousel>
     </a-col>
     <a-col :span="10" class="right_part">
-      <div style="margin-top: 10px;margin-left: 10px;margin-bottom: 20px;">
+      <div style="margin-top: 10px;margin-left: 10px;margin-bottom: 20px;margin-right: 10px;">
         <a-avatar slot="avatar" :src="writer_avatar" />
         <span style="font-size: larger; font-weight: 600;margin-left: 10px;">{{ writer }}</span>
-        <a-button html-type="submit" :loading="submitting" type="primary" @click="handleLike"
-          style="margin-left:  450px;">
+        <a-button html-type="submit" :loading="submitting" type="primary" @click="handleLike" style="float: right;">
           <span v-if="liked">已点赞</span>
           <span v-else>点赞</span>
         </a-button>
@@ -35,7 +34,7 @@
 <script>
 import AddComment from './addComment.vue';
 import commentList from './comment.vue';
-import { postGet,likePost,unlikePost } from '../../services/user';
+import { postGet, likePost, unlikePost } from '../../services/user';
 import { mapGetters } from 'vuex';
 export default {
   components: {
@@ -115,16 +114,16 @@ export default {
         //   // moment,
         // },
       ],
-      liked:false,
+      liked: false,
     }
   },
-  methods:{
-    handleLike(){
-      this.liked=!this.liked;
-      if(this.liked){
-        likePost(this.user.user_name,this.post_id)
-      }else{
-        unlikePost(this.user.user_name,this.post_id)
+  methods: {
+    handleLike() {
+      this.liked = !this.liked;
+      if (this.liked) {
+        likePost(this.user.user_name, this.post_id)
+      } else {
+        unlikePost(this.user.user_name, this.post_id)
       }
     },
   }
