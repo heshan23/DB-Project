@@ -69,6 +69,7 @@ class LikeComment(APIView):
         try:
             user_name = str(request.data["user_name"])
             comment_id = str(request.data["comment_id"])
+            print(user_name+str(comment_id))
         except KeyError:
             return Response({"reason": "keyError,请检查发送的信息是否有user_id,comment_id"},
                             status=422)

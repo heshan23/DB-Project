@@ -27,8 +27,9 @@ class NewComment(APIView):
             be_call_user = post.user
             notice = Notice.objects.create(
                 user=be_call_user,
-                content=str(username) + " 回复了你的帖子: " + str(post.title),
-                create_date=timezone.now()
+                content=str(username) + " 回复了你: " + str(post.title),
+                create_date=timezone.now(),
+                related_post=post
             )
             notice.save()
             if res_id is not None:

@@ -160,6 +160,8 @@ class Notice(models.Model):
     content = models.TextField(verbose_name="content")
     user = models.ForeignKey(verbose_name="receiver",
                              to=User, on_delete=models.CASCADE)
+    related_post = models.ForeignKey(verbose_name="related_post", to=Post, on_delete=models.CASCADE, default=1)
+    isUnRead = models.BooleanField(verbose_name="isUnRead", default=True)
 
     class Meta:
         db_table = "tb_Notice"

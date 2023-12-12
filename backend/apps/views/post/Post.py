@@ -99,13 +99,13 @@ class PostGet(APIView):
                 if comment.res_comment != -1:
                     res = Comment.objects.get(id=comment.res_comment)
                     append = (
-                        append
-                        + "@"
-                        + str(res.user.user_name)
-                        + " "
-                        + str(res.content[0 : min(10, len(res.content))])
+                            append
+                            + "@"
+                            + str(res.user.user_name)
+                            + " "
+                            + str(res.content[0: min(10, len(res.content))])
                     )
-
+                com_like_count = CommentLike.objects.filter(comment=comment).count()
                 if comment.user.avatar is None:
                     coa = default_avatar_url
                 else:
@@ -120,6 +120,7 @@ class PostGet(APIView):
                         "content": comment.content,
                         "reply": str(append),
                         "avatar": coa,
+                        "likes": com_like_count
                     }
                 )
         except Exception as e:

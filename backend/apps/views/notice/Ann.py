@@ -23,15 +23,19 @@ class GetNowNotice(APIView):
     def get(self, request):
         try:
             # 这个user是接受信息的人
-            user_id = request.GET['user_id']
+            user_name = request.GET['user_name']
         except KeyError:
-            return Response({"reason": "检查数据是否给出userid"}, status=422)
-        notices = Notice.objects.filter(user_id=user_id).order_by("create_date")
+            return Response({"reason": "检查数据是否给出username"}, status=422)
+        user = User.objects.get(user_name=user_name)
+        notices = Notice.objects.filter(user_id=user.id).order_by("create_date")
         ret = []
         for notice in notices:
             ret.append({
                 "content": notice.content,
-                "create_date": notice.create_date
+                "create_date": notice.create_date,
+                "message_id": notice.id,
+                "post_id": notice.related_post.id,
+                "isUnread": notice.isUnRead
             })
         return Response({"reason": "查询成功", "data": ret}, status=200)
 
