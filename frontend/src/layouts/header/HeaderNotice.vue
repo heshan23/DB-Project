@@ -20,7 +20,7 @@
                   <a-avatar style="background-color: white" slot="avatar"
                     src="https://gw.alipayobjects.com/zos/rmsportal/ThXAXghbEsBCCSDihZxY.png" />
                 </a-list-item-meta>
-                <a-badge dot v-if="comment.isUread" />
+                <a-badge dot v-if="comment.isUnread" />
               </a-list-item>
             </a-list>
           </a-tab-pane>
@@ -72,40 +72,33 @@ export default {
       this.comments = []
       this.count = 0
       getNowNotice(this.user.user_name).then(res => {
-        const dataArray = res.data
+        const dataArray = res.data.data
         for (let i = 0, len = dataArray.length; i < len; i++) {
           this.comments.push({
             message_id: dataArray[i].message_id,
             content: dataArray[i].content,
             create_date: dataArray[i].content,
-            isUread: dataArray[i].isUread,
+            isUnread: dataArray[i].isUnread,
             post_id: dataArray[i].post_id
           })
-          if (dataArray[i].isUread) {
+          if (dataArray[i].isUnread) {
             this.count = this.count + 1
           }
+          console.log(dataArray[i].isUnread)
         }
       }).catch(err => {
         console.log(err)
         this.error("请求失败, 请尝试刷新页面", 1);
       })
-      // this.comments.push({
-      //   message_id: 1,
-      //   content: 'fuck',
-      //   create_date: '114514',
-      //   isUread: true,
-      //   post_id: 114514
-      // })
-      // this.count = this.count + 1
       setTimeout(() => {
         this.loading = false
       }, 500)
     },
     onclick(comment) {
-      if (!comment.isUread) {
+      if (!comment.isUnread) {
         return
       }
-      comment.isUread = false
+      comment.isUnread = false
       this.count = this.count - 1
       readNotice(this.user.user_name, comment.message_id).catch(err => {
         console.log(err)
