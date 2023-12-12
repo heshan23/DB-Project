@@ -29,7 +29,7 @@ export default {
             submitting: false,
             value: '',
             user_avatar: this.$parent.user_avatar,
-            post_id: this.$parent.post_id,
+            post_id: this.data.post_id,
             moment,
         };
     },
@@ -45,12 +45,16 @@ export default {
             this.submitting = true;
             console.log(this.$data.post_id);
             newComment(this.user.user_name, this.$data.post_id, this.value).then(res => {
-                this.success(res.data.reason)
                 this.submitting = false;
+                this.$message.success(res.data.reason).then(() => {
+                    location.reload()
+                })
             }).catch(err => {
                 console.log(err)
-                this.error(err.response.data.reason, 1);
                 this.submitting = false;
+                this.$message.error(err.response.data.reason, 1).then(() => {
+                    location.reload()
+                })
             })
         }
     }

@@ -24,7 +24,7 @@
           {{ content }}
         </span>
         <a-divider />
-        <AddComment :user_avatar="user_avatar" />
+        <AddComment :data="this.$data" />
         <div v-for="(item, key) in comments" :key="key">
           <commentList :data="item" />
         </div>
