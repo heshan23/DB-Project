@@ -24,8 +24,8 @@
         <p slot="content">
             {{ content }}
         </p>
-        <a-tooltip slot="datetime" :title="moment().format('YYYY-MM-DD HH:mm:ss')">
-            <span>{{ moment().fromNow() }}</span>
+        <a-tooltip slot="datetime" :title="this.moment">
+            <span>{{ this.moment }}</span>
         </a-tooltip>
         <a-modal :title="replyTitle" :visible="visible" :confirm-loading="confirmLoading" @ok="handleOk"
             @cancel="handleCancel">
@@ -34,7 +34,6 @@
     </a-comment>
 </template>
 <script>
-import moment from 'moment';
 export default {
     //需要上传的数据是点赞的变化，可以最后根据action来判断，然后后端加一或减一或不变即可
     //时间展示接口有待商榷
@@ -47,7 +46,7 @@ export default {
             likes: this.data.likes,
             dislikes: 0,
             action: null,
-            moment,
+            moment:this.data.moment,
             visible: false,
             confirmLoading: false,
             replyContent: '',
@@ -58,6 +57,7 @@ export default {
             if (this.action == 'liked') {
                 this.likes = this.likes - 1;
                 this.action = null;
+                return;
             }
             this.likes = this.likes + 1;
             if (this.action == 'disliked') {
@@ -69,6 +69,7 @@ export default {
             if (this.action == 'disliked') {
                 this.dislikes = this.dislikes - 1;
                 this.action = null;
+                return;
             }
             this.dislikes = this.dislikes + 1;
             if (this.action == 'liked') {
