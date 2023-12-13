@@ -185,6 +185,7 @@ export default {
   register,
   newPost,
   queryPost,
+  deletePost,
   postGet,
   likePost,
   likeComment,

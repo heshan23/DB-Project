@@ -71,7 +71,12 @@
                                     {{ text }}
                                 </span>
                             </template>
-                            <img slot="extra" style="width: 200px;height: 180px;" alt="logo" :src="item.picture" />
+                            <a-button slot="extra" type="danger" style="margin-right: 15px"
+                                @click="showConfirm(item.post_id)" ghost>
+                                delete
+                            </a-button>
+                            <img slot="extra" style="width: 200px;height: 180px;" alt="logo" :src="item.picture"
+                                @click="onClick(item.post_id)" />
                             <a-list-item-meta>
                                 <a slot="title">{{ item.writer }}</a>
                                 <a-avatar slot="avatar" :src="item.avatar" />
@@ -91,7 +96,7 @@
 import { editProfile, logout } from '@/services/user'
 import { mapGetters } from 'vuex';
 // import { state } from '../../store/index'
-import { queryPost } from '../../services/user';
+import { queryPost, deletePost } from '../../services/user';
 
 export default {
     created() {
@@ -196,7 +201,37 @@ export default {
                 this.$message.error(err.response.data.reason, 1);
             })
             this.visible = false;
-        }
+        },
+        onClick(post_id) {
+            this.$router.push({
+                path: "/article",
+                query: { "post_id": post_id }
+            })
+        },
+        showConfirm(data) {
+            const name = this.$data.user_name
+            this.$confirm({
+                title: 'Do you want to delete these article?',
+                // content: 'When clicked the OK button, this dialog will be closed after 1 second',
+                content: '注意, 删除文章操作执行后不可撤销, 点击确认以执行删除操作!',
+                onOk() {
+                    deletePost(name, data).then((res) => {
+                        this.success(res.data.reason, 1).then(() => {
+                            location.reload()
+                        })
+                    }
+                    ).catch(
+                        (err) => {
+                            this.error(err.response.data.reason, 1)
+                        }
+                    )
+                    return new Promise((resolve, reject) => {
+                        setTimeout(Math.random() > 0.5 ? resolve : reject, 1000);
+                    }).catch(() => console.log('Oops errors!'));
+                },
+                onCancel() { },
+            });
+        },
     }
 }
 </script>
