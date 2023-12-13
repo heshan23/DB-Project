@@ -29,7 +29,7 @@ class GetImageUrl(APIView):
 
 class DeleteImage(APIView):
     def post(self, request):
-        image_id = request.GET['img_id']
+        image_id = request.data['img_id']
         img = Image.objects.get(
             id=image_id
         )
