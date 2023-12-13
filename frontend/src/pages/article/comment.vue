@@ -112,15 +112,17 @@ export default {
             console.log(this.replyContent)
             newComment(this.user.user_name, this.post_id, this.replyContent, this.comment_id).then(
                 (res) => {
-                    this.success(res.data.reason, 1)
+                    this.$message.success(res.data.reason, 1).then(() => {
+                        location.reload()
+                    })
                 }
             ).catch((err) => {
-                this.error(err.response.data.reason, 1)
+                this.$message.error(err.response.data.reason, 1)
             })
             setTimeout(() => {
                 this.visible = false;
                 this.confirmLoading = false;
-            }, 2000);
+            }, 500);
         },
         handleCancel() {
             this.visible = false;

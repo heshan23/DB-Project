@@ -1,11 +1,11 @@
 <template>
     <div class="card">
-        <a-card hoverable style="width: 300px;margin: 2px;" v-for="(item, key) in contents " :key=key>
+        <a-card hoverable style="width: 300px;margin: 2px;" v-for="(item, key) in   contents   " :key=key>
             <img class="img" slot="cover" alt="example" :src="item.picture" @click="onclick(item.post_id)" />
             <a-card-meta :title=item.title :description=item.writer @click="onclick(item.post_id)">
                 <a-avatar slot="avatar" :src=item.avatar />
             </a-card-meta>
-            <template v-for="{ type, text } in item.actions" slot="actions">
+            <template v-for="  { type, text }   in   item.actions  " slot="actions">
                 <span :key="type">
                     <a-icon :type="type" style="margin-right: 8px" />
                     {{ text }}
@@ -67,6 +67,10 @@ export default {
 
 .img {
     height: 310px;
+}
+
+.title {
+    font-size: small;
 }
 </style>  
 
