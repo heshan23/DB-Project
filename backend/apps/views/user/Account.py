@@ -73,19 +73,26 @@ class EditProfile(APIView):
             before_name = request.data["before_name"]
             new_name = request.data["new_name"]
             new_password = request.data["new_password"]
+            old_password = request.data['old_password']
         except KeyError:
             return Response({"reason": "keyError,请检查发送的信息"}, status=422)
         if check_user_name_exist(new_name):
             return Response({"reason": "该新用户名已被注册"}, status=400)
         try:
+            reason = "修改成功"
             user = User.objects.get(user_name=before_name)
-            user.user_name = new_name
+            if old_password != user.password:
+                return Response({"reason": "原先密码错误"}, status=403)
+            if len(new_name) > 0:
+                user.user_name = new_name
+            else:
+                reason = "新用户名不能为空,其余信息修改成功"
             user.password = new_password
             user.save()
         except Exception as e:
             print(e)
             return Response({"reason": str(e)}, status=500)
-        return Response({"reason": "修改成功"}, status=200)
+        return Response({"reason": reason}, status=200)
 
 
 # 展示账户界面的基本信息
@@ -101,7 +108,7 @@ class YourAccountMessage(APIView):
             if user.avatar is None:
                 avatar = default_avatar_url
             else:
-                avatar = image_url+user.avatar.img.url
+                avatar = image_url + user.avatar.img.url
             ret_data = {
                 "user_name": user.user_name,
                 "user_email": user.email,

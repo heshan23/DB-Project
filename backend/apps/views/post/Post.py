@@ -106,9 +106,9 @@ class PostGet(APIView):
                             append
                             + "@"
                             + str(res.user.user_name)
-                            + "     "
+                            + "的评论: \""
                             + str(res.content[0: min(10, len(res.content))]
-                                  + str(cut)
+                                  + str(cut) + "\""
                                   )
                     )
                 com_like_count = CommentLike.objects.filter(comment=comment).count()
