@@ -100,9 +100,10 @@ export default {
       }
       comment.isUnread = false
       this.count = this.count - 1
+      // console.log(comment.message_id)
       readNotice(this.user.user_name, comment.message_id).catch(err => {
         console.log(err)
-        this.error("请求失败, 请尝试刷新页面", 1);
+        this.$message.error("请求失败, 请尝试刷新页面", 1);
       })
     }
   }

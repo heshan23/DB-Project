@@ -25,10 +25,12 @@ export default {
   height: 100vh;
   overflow: auto;
   background-color: @layout-body-background;
-  background-image: url('https://gw.alipayobjects.com/zos/rmsportal/TVYTbAXWheQpRcWDaDMu.svg');
+  // background-image: url('https://gw.alipayobjects.com/zos/rmsportal/TVYTbAXWheQpRcWDaDMu.svg');
+  background-image: url('../assets/img/login-background.png');
   background-repeat: no-repeat;
   background-position-x: center;
-  background-position-y: 110px;
+  // background-position-y: 110px;
+  background-position-y: 0px;
   background-size: 100%;
   .content{
     padding: 32px 0;
