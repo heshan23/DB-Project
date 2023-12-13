@@ -39,7 +39,7 @@
 <script>
 import AddComment from './addComment.vue';
 import commentList from './comment.vue';
-import { postGet, likePost, unlikePost } from '../../services/user';
+import { postGet, likePost, unlikePost, hasLiked } from '../../services/user';
 import { mapGetters } from 'vuex';
 export default {
   components: {
@@ -66,13 +66,15 @@ export default {
         }
         for (let i = 0; i < articleData.comments.length; i++) {
           this.$data.comments.push({
+            post_id: post_id,
             comment_id: articleData.comments[i].comment_id,
             author: articleData.comments[i].user_name,
             avatar: articleData.comments[i].avatar,
             content: articleData.comments[i].content,
             likes: articleData.comments[i].likes,
             // dislikes: articleData.comments[i].dislikes,
-            moment: articleData.comments[i].create_date
+            moment: articleData.comments[i].create_date,
+            reply: articleData.comments[i].reply
           })
         }
       }
@@ -82,6 +84,17 @@ export default {
         this.$message.error("获取文章失败", 1)
       }
     )
+    hasLiked(this.user.user_name, post_id).then(
+      res => {
+        if (res.data.data == true) {
+          this.liked = true
+        }
+      }
+    ).catch(
+      err => {
+        console.log(err)
+        this.$message.error("获取文章点赞信息失败", 1)
+      })
   },
   computed: {
     ...mapGetters('account', ['user']),

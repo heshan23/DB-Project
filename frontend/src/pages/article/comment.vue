@@ -34,35 +34,59 @@
     </a-comment>
 </template>
 <script>
+import { newComment, hasLikedComment, unlikeComment, likeComment } from '../../services/user';
+import { mapGetters } from 'vuex';
 export default {
     //需要上传的数据是点赞的变化，可以最后根据action来判断，然后后端加一或减一或不变即可
     //时间展示接口有待商榷
     props: ['data'],
+    created() {
+        hasLikedComment(this.user.user_name, this.data.comment_id).then(
+            (res) => {
+                if (res.data.data == true) {
+                    this.action = 'liked'
+                }
+            }
+        ).catch((err) => {
+            this.error(err.response.data.reason, 1)
+        })
+        if (this.data.reply != "") {
+            this.content = '回复' + this.data.reply + '\n' + this.content
+        }
+    },
     data() {
         return {
+            post_id: this.data.post_id,
+            comment_id: this.data.comment_id,
             author: this.data.author,
             avatar: this.data.avatar,
             content: this.data.content,
             likes: this.data.likes,
             dislikes: 0,
             action: null,
-            moment:this.data.moment,
+            moment: this.data.moment,
             visible: false,
             confirmLoading: false,
             replyContent: '',
         };
+    },
+    computed: {
+        ...mapGetters('account', ['user']),
     },
     methods: {
         like() {
             if (this.action == 'liked') {
                 this.likes = this.likes - 1;
                 this.action = null;
+                unlikeComment(this.user.user_name, this.comment_id)
                 return;
             }
             this.likes = this.likes + 1;
+            likeComment(this.user.user_name, this.comment_id)
             if (this.action == 'disliked') {
                 this.dislikes = this.dislikes - 1;
             }
+
             this.action = 'liked';
         },
         dislike() {
@@ -74,6 +98,7 @@ export default {
             this.dislikes = this.dislikes + 1;
             if (this.action == 'liked') {
                 this.likes = this.likes - 1;
+                unlikeComment(this.user.user_name, this.comment_id).then()
             }
             this.action = 'disliked';
         },
@@ -84,6 +109,13 @@ export default {
         handleOk() {
             this.confirmLoading = true;
             console.log(this.replyContent)
+            newComment(this.user.user_name, this.post_id, this.replyContent, this.comment_id).then(
+                (res) => {
+                    this.success(res.data.reason, 1)
+                }
+            ).catch((err) => {
+                this.error(err.response.data.reason, 1)
+            })
             setTimeout(() => {
                 this.visible = false;
                 this.confirmLoading = false;
