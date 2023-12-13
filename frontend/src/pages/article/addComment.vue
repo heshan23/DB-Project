@@ -46,7 +46,7 @@ export default {
             console.log(this.$data.post_id);
             newComment(this.user.user_name, this.$data.post_id, this.value).then(res => {
                 this.submitting = false;
-                this.$message.success(res.data.reason).then(() => {
+                this.$message.success(res.data.reason, 1).then(() => {
                     location.reload()
                 })
             }).catch(err => {
