@@ -141,7 +141,7 @@ export default {
                         avatar: dataArray[i].avatar,
                         picture: dataArray[i].picture,
                         writer: dataArray[i].writer,
-                        content: dataArray[i].content.substr(0, 1000),
+                        content: dataArray[i].content.substr(0, 210),
                         actions: [
                             { type: 'like-o', text: dataArray[i].like_count },
                             { type: 'star-o', text: dataArray[i].star_count },
