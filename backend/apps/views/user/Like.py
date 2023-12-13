@@ -49,6 +49,21 @@ class hasLike(APIView):
             return Response({"reason": "未点赞", "data": False}, status=200)
 
 
+class hasLikeComment(APIView):
+    def get(self, request):
+        try:
+            user_name = request.GET['user_name']
+            comment_id = request.GET['comment_id']
+        except KeyError:
+            return Response({"reason": "请检查是否有user_name和comment_id"}, status=422)
+        user = User.objects.get(user_name=user_name)
+        try:
+            comment_like = CommentLike.objects.get(user_id=user, comment=comment_id)
+            return Response({"reason": "已经点赞", "data": True}, status=200)
+        except PostLike.DoesNotExist:
+            return Response({"reason": "未点赞", "data": False}, status=200)
+
+
 class UnLike(APIView):
     def post(self, request):
         try:
