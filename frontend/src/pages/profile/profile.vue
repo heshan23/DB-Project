@@ -31,7 +31,9 @@
                 </div>
                 <div class="editButton">
                     <a-space size="small">
-                        <a-button :loading="loading" ghost>上传头像</a-button>
+                        <a-upload name="file" :showUploadList=false :file-list="fileList" :customRequest="customRequest">
+                            <a-button :loading="loading" ghost>上传头像</a-button>
+                        </a-upload>
                         <a-button :loading="loading" @click="edit" ghost>修改信息</a-button>
                         <a-modal v-model="visible" title="Edit Information" :confirm-loading="confirmLoading"
                             @ok="handleCreate">
@@ -93,7 +95,7 @@
 </template>
 
 <script>
-import { editProfile, logout } from '@/services/user'
+import { editProfile, logout, uploadImage } from '@/services/user'
 import { mapGetters } from 'vuex';
 // import { state } from '../../store/index'
 import { queryPost, deletePost } from '../../services/user';
@@ -132,6 +134,9 @@ export default {
             user_name: "loading...",
             // username: this.user.user_name,
             avatar: "",
+            fileList: [
+
+            ],
             email: "you",
             loading: false,
             visible: false,
@@ -201,6 +206,28 @@ export default {
                 this.$message.error(err.response.data.reason, 1);
             })
             this.visible = false;
+        },
+        customRequest(data) {
+            //上传完文件还需要刷新一下
+            const formData = new FormData();
+            formData.append('img', data.file);
+            uploadImage(formData).then((res) => {
+                let img = {
+                    uid: res.data.id,
+                    name: 'test.jpg',
+                    status: 'done',
+                    url: res.data.url,
+                }
+                this.fileList.push(img)
+                this.$message.success(res.data.reason)
+                /**
+                 * 使用 res.data.url 获取图片地址
+                 * 使用 res.data.id 获取图片id (用作查询图片的 url)
+                 */
+            }
+            ).catch((err) => {
+                this.$message.error(err.response.code)
+            })
         },
         onClick(post_id) {
             this.$router.push({
