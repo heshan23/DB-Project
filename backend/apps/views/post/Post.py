@@ -60,6 +60,7 @@ class NewPost(APIView):
         except Exception as e:
             print(e)
             return Response({"reason": "tag-未知错误，请联系管理员"}, status=500)
+        print(timezone.now())
         return Response({"reason": "创建帖子成功"}, status=200)
 
 
@@ -98,12 +99,17 @@ class PostGet(APIView):
                 append = ""
                 if comment.res_comment != -1:
                     res = Comment.objects.get(id=comment.res_comment)
+                    cut = ""
+                    if len(res.content) > 10:
+                        cut = "....."
                     append = (
                             append
                             + "@"
                             + str(res.user.user_name)
-                            + " "
-                            + str(res.content[0: min(10, len(res.content))])
+                            + "     "
+                            + str(res.content[0: min(10, len(res.content))]
+                                  + str(cut)
+                                  )
                     )
                 com_like_count = CommentLike.objects.filter(comment=comment).count()
                 if comment.user.avatar is None:
@@ -115,7 +121,7 @@ class PostGet(APIView):
                         "comment_id": comment.id,
                         "user_name": comment.user.user_name,
                         "create_date": comment.create_date.strftime(
-                            "%Y-%m-%d %H:%I:%S"
+                            "%y-%m-%d %H:%I:%S"
                         ),
                         "content": comment.content,
                         "reply": str(append),
@@ -134,7 +140,7 @@ class PostGet(APIView):
             "title": post.title,
             "content": post.content,
             "tag": tags,
-            "create_date": post.create_date.strftime("%Y-%m-%d %H:%I:%S"),
+            "create_date": post.create_date.strftime("%y-%m-%d %H:%I:%S"),
             "like_count": like_count,
             "comments": comments,
         }
@@ -250,7 +256,7 @@ class QueryPost(APIView):
                     "picture": image,
                     "title": post.title,
                     "content": post.content,
-                    "create_date": post.create_date.strftime("%Y-%m-%d %H:%I:%S"),
+                    "create_date": post.create_date.strftime("%y-%m-%d %H:%I:%S"),
                     "like_count": like_count,
                     "comment_count": comment_count,
                     "star_count": 0,

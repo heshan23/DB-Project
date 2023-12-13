@@ -17,6 +17,7 @@
 
 <script>
 import { uploadImage } from '@/services/user'
+import { DeleteImage } from '../../services/user';
 function getBase64(file) {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -33,6 +34,7 @@ export default {
             fileList: [
 
             ],
+            idList: []
         };
     },
     methods: {
@@ -47,6 +49,7 @@ export default {
                     url: res.data.url,
                 }
                 this.fileList.push(img)
+                this.idList.push(res.data.id)
                 this.$message.success(res.data.reason)
                 /**
                  * 使用 res.data.url 获取图片地址
@@ -73,10 +76,21 @@ export default {
         },
         handleRemove(file) {
             let index = this.fileList.indexOf(file)
+            let id = this.idList[index]
+            DeleteImage(id).then((res) => {
+                this.$message.success(res.data.reason, 1)
+                this.$emit('delete', id)
+            }).catch((err) => {
+                this.$message.err(err.response.data.reason, 1)
+            })
+
             const uid = file.uid
             console.log(uid)
             let newFileList = this.fileList.slice()
+            let newidList = this.idList.slice()
             newFileList.splice(index, 1)
+            newidList.splice(index, 1)
+            this.idList = newidList
             this.fileList = newFileList
         }
     },

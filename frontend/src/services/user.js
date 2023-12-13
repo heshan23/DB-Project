@@ -146,8 +146,28 @@ export async function unlikeComment(user_name, comment_id) {
   })
 }
 
+export async function hasLiked(user_name, post_id) {
+  return request(path.HASLIKED, METHOD.GET, {
+    "user_name": user_name,
+    "post_id": post_id
+  })
+}
+
+export async function hasLikedComment(user_name, comment_id) {
+  return request(path.HASLIKEDCOMMENT, METHOD.GET, {
+    "user_name": user_name,
+    "comment_id": comment_id
+  })
+}
+
 export async function uploadImage(file) {
   return request(path.UPLOADIMG, METHOD.POST, file)
+}
+
+export async function DeleteImage(img_id) {
+  return request(path.DELETEIMG, METHOD.POST, {
+    "img_id": img_id
+  })
 }
 
 /* ----------------------------- 通知部分 ------------------------- */
@@ -185,11 +205,14 @@ export default {
   register,
   newPost,
   queryPost,
+  deletePost,
   postGet,
   likePost,
   likeComment,
   unlikePost,
   unlikeComment,
+  hasLiked,
+  hasLikedComment,
   uploadImage,
   getNowNotice,
   readNotice

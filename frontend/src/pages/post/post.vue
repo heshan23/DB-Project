@@ -31,7 +31,7 @@
                     <a-textarea placeholder="请输入正文" v-model="content" :auto-size="{ minRows: 12, maxRows: 20 }"
                         style="width: 790px;" />
                     <a-divider />
-                    <postImage v-on:upload="getImageId" />
+                    <postImage v-on:upload="getImageId" v-on:delete="delImageId" />
                     <div>
                         <span :style="{ marginRight: 8 }">标签:</span>
                         <template v-for="tag in tags">
@@ -117,6 +117,13 @@ export default {
         getImageId(data) {
             console.log(data)
             this.image_ids.push(data)
+        },
+        delImageId(data) {
+            console.log(data)
+            let idx = this.image_ids.indexOf(data)
+            let newImgIds = this.image_ids.slice()
+            newImgIds = newImgIds.splice(idx, 1)
+            this.image_ids = newImgIds
         }
     }
 }

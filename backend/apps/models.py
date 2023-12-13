@@ -47,7 +47,7 @@ class User(models.Model):
 class Post(models.Model):
     title = models.CharField(max_length=TITLE_SIZE, verbose_name="title")
     content = models.TextField(verbose_name="text")
-    create_date = models.DateField(verbose_name="created_date")
+    create_date = models.DateTimeField(verbose_name="created_date")
     user = models.ForeignKey(verbose_name="user_poster_id", to=User,
                              on_delete=models.CASCADE, default=1)
 
@@ -92,7 +92,7 @@ class Comment(models.Model):
     post = models.ForeignKey(verbose_name="post_id", to=Post, on_delete=models.CASCADE, default=1)
     content = models.TextField(verbose_name="text")
     res_comment = models.IntegerField(verbose_name="res_to_comment_id", default=-1)
-    create_date = models.DateField(verbose_name="create_date")
+    create_date = models.DateTimeField(verbose_name="create_date")
 
     # 当然，对一个帖子可以有多个评论
     class Meta:
@@ -147,7 +147,7 @@ class BoardPost(models.Model):
 
 # 公告
 class Ann(models.Model):
-    create_date = models.DateField(verbose_name="create_date")
+    create_date = models.DateTimeField(verbose_name="create_date")
     content = models.TextField(verbose_name="content")
 
     class Meta:
@@ -156,7 +156,7 @@ class Ann(models.Model):
 
 
 class Notice(models.Model):
-    create_date = models.DateField(verbose_name="create_date")
+    create_date = models.DateTimeField(verbose_name="create_date")
     content = models.TextField(verbose_name="content")
     user = models.ForeignKey(verbose_name="receiver",
                              to=User, on_delete=models.CASCADE)

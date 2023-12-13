@@ -10,7 +10,7 @@ class Like(APIView):
             user_name = str(request.data["user_name"])
             post_id = str(request.data["post_id"])
         except KeyError:
-            return Response({"reason": "keyError,请检查发送的信息是否有user_id,post_id"},
+            return Response({"reason": "keyError,请检查发送的信息是否有user_name,post_id"},
                             status=422)
         try:
             user = User.objects.get(
@@ -28,10 +28,11 @@ class Like(APIView):
                 user=user,
                 post=post
             )
+            count = PostLike.objects.filter(post=post).count()
         except Exception as e:
             print(e)
             return Response({"reason": "已经点赞过了"}, status=500)
-        return Response({"reason": "点赞成功"}, status=200)
+        return Response({"reason": "点赞成功", "data": count}, status=200)
 
 
 class hasLike(APIView):
@@ -46,6 +47,21 @@ class hasLike(APIView):
             post_like = PostLike.objects.get(user_id=user, post_id=post_id)
             return Response({"reason": "已经点赞", "data": True}, status=200)
         except PostLike.DoesNotExist:
+            return Response({"reason": "未点赞", "data": False}, status=200)
+
+
+class hasLikeComment(APIView):
+    def get(self, request):
+        try:
+            user_name = request.GET['user_name']
+            comment_id = request.GET['comment_id']
+        except KeyError:
+            return Response({"reason": "请检查是否有user_name和comment_id"}, status=422)
+        user = User.objects.get(user_name=user_name)
+        try:
+            comment_like = CommentLike.objects.get(user_id=user, comment=comment_id)
+            return Response({"reason": "已经点赞", "data": True}, status=200)
+        except CommentLike.DoesNotExist:
             return Response({"reason": "未点赞", "data": False}, status=200)
 
 
@@ -73,10 +89,11 @@ class UnLike(APIView):
                 user=user,
                 post=post
             ).delete()
+            count = PostLike.objects.filter(post=post).count()
         except Exception as e:
             print(e)
             return Response({"reason": "当前未点赞该帖子，无法撤销"}, status=500)
-        return Response({"reason": "取消点赞"}, status=200)
+        return Response({"reason": "取消点赞", "data": count}, status=200)
 
 
 class LikeComment(APIView):
@@ -104,10 +121,11 @@ class LikeComment(APIView):
                 user=user,
                 comment=comment
             )
+            count = CommentLike.objects.filter(comment=comment).count()
         except Exception as e:
             print(e)
             return Response({"reason": "已经点赞过了"}, status=500)
-        return Response({"reason": "点赞成功"}, status=200)
+        return Response({"reason": "点赞成功", "data": count}, status=200)
 
 
 class UnLikeComment(APIView):
@@ -134,7 +152,8 @@ class UnLikeComment(APIView):
                 user=user,
                 comment=comment
             ).delete()
+            count = CommentLike.objects.filter(comment=comment).count()
         except Exception as e:
             print(e)
             return Response({"reason": "当前未点赞该评论，无法撤销"}, status=500)
-        return Response({"reason": "取消点赞"}, status=200)
+        return Response({"reason": "取消点赞", "data": count}, status=200)

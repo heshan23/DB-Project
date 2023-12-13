@@ -14,7 +14,8 @@ urlpatterns = [
     # 用户点赞帖子
     path('Like/', Like.as_view()),
     path('UnLike/', UnLike.as_view()),
-    path('hasLiked/',hasLike.as_view()),
+    path('hasLiked/', hasLike.as_view()),
+    path('hasLikedComment/', hasLikeComment.as_view()),
     # 用户收藏
     path('Collection/', DOCollection.as_view()),
     path('UnCollection/', UnCollection.as_view()),
@@ -22,6 +23,7 @@ urlpatterns = [
     path('UploadImage/', UploadImage.as_view()),
     path('GetImageUrl/', GetImageUrl.as_view()),
     path('UploadAvator/', UploadAvator.as_view()),
+    path('DeleteImage/', DeleteImage.as_view()),
     # 管理员功能
     path('RemoveUser/', RemoveUser.as_view())
 ]
