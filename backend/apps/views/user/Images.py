@@ -30,8 +30,11 @@ class GetImageUrl(APIView):
 class DeleteImage(APIView):
     def post(self, request):
         image_id = request.data['img_id']
-        img = Image.objects.get(
-            id=image_id
-        )
-        img.delete()
+        try:
+            img = Image.objects.get(
+                id=image_id
+            )
+            img.delete()
+        except Image.DoesNotExist:
+            return Response({"reason": "图片不存在"}, status=404)
         return Response({'reason': "删除成功"}, status=200)
