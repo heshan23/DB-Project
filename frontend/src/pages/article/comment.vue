@@ -82,7 +82,9 @@ export default {
                 return;
             }
             this.likes = this.likes + 1;
-            likeComment(this.user.user_name, this.comment_id)
+            likeComment(this.user.user_name, this.comment_id).then((res) => {
+                this.success(res.data.reason, 1)
+            })
             if (this.action == 'disliked') {
                 this.dislikes = this.dislikes - 1;
             }

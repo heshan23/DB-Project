@@ -95,7 +95,7 @@
 </template>
 
 <script>
-import { editProfile, logout } from '@/services/user'
+import { editProfile, logout } from '../../services/user'
 import { mapGetters } from 'vuex';
 // import { state } from '../../store/index'
 import { queryPost, deletePost, UploadAvator } from '../../services/user';
@@ -119,7 +119,7 @@ export default {
                         { type: 'star-o', text: dataArray[i].star_count },
                         { type: 'message', text: dataArray[i].comment_count },
                     ],
-                    content: dataArray[i].content.substr(0,210),
+                    content: dataArray[i].content.substr(0, 210),
                     post_id: dataArray[i].post_id
                 })
             }
@@ -195,9 +195,11 @@ export default {
             const beforename = this.user.user_name;
             const name = this.form.getFieldValue('new_name');
             // 目前没有对旧密码校验
-            // const oldPassword = this.form.getFieldValue('旧密码');
+            const oldPassword = this.form.getFieldValue('old_password');
+            // console.log(name)
+
             const newPassword = this.form.getFieldValue('new_password');
-            editProfile(beforename, name, newPassword).then(() => {
+            editProfile(beforename, name, oldPassword, newPassword).then(() => {
                 this.$message.success('修改成功！', 1)
                 logout()
                 this.$router.push('/login')
