@@ -60,6 +60,7 @@ class NewPost(APIView):
         except Exception as e:
             print(e)
             return Response({"reason": "tag-未知错误，请联系管理员"}, status=500)
+        print(timezone.now())
         return Response({"reason": "创建帖子成功"}, status=200)
 
 
