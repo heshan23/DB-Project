@@ -73,7 +73,7 @@
                             </template>
                             <a-button slot="extra" type="danger" style="margin-right: 15px"
                                 @click="showConfirm(item.post_id)" ghost>
-                                delete
+                                删除
                             </a-button>
                             <img slot="extra" style="width: 200px;height: 180px;" alt="logo" :src="item.picture"
                                 @click="onClick(item.post_id)" />

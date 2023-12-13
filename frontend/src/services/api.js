@@ -16,9 +16,12 @@ module.exports = {
 
   LIKE: `${BASE_URL}/User/Like/`,
   LIKECOMMENT: `${BASE_URL}/User/LikeComment/`,
-  UNLIKE: `${BASE_URL}/User/Unlike/`,
-  UNLIKECOMMENT: `${BASE_URL}/User/UnlikeComment/`,
+  UNLIKE: `${BASE_URL}/Post/Unlike/`,
+  UNLIKECOMMENT: `${BASE_URL}/Post/UnlikeComment/`,
+  HASLIKED: `${BASE_URL}/User/hasLiked/`,
+  HASLIKEDCOMMENT: `${BASE_URL}/User/hasLikedComment/`,
   UPLOADIMG: `${BASE_URL}/User/UploadImage/`,
+  DELETEIMG: `${BASE_URL}/User/DeleteImage/`,
 
   GETNOWNOTICE: `${BASE_URL}/Notice/GetNowNotice/`,
   READNOTICE: `${BASE_URL}/Notice/ReadNotice/`,
