@@ -95,6 +95,7 @@ export default {
                     const block_name = this.value
                     const tag_name = this.selectedTags//返回一个数组
                     const image_ids = this.image_ids
+                    console.log(this.image_ids)
                     newPost(name, title, content, block_name, tag_name, image_ids).then(() => {
                         this.$message.success('发帖成功！', 1)
                         this.$router.push('/square')
@@ -122,8 +123,8 @@ export default {
             console.log(data)
             let idx = this.image_ids.indexOf(data)
             let newImgIds = this.image_ids.slice()
-            newImgIds = newImgIds.splice(idx, 1)
-            this.image_ids = newImgIds
+            newImgIds.splice(idx, 1)
+            this.image_ids = newImgIds.slice()
         }
     }
 }
