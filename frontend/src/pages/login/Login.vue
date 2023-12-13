@@ -49,19 +49,12 @@
         </a-tabs>
         <div>
           <a-checkbox :checked="true">自动登录</a-checkbox>
-          <router-link style="float: right" to="/unknow">忘记密码</router-link>
+          <router-link style="float: right" to="/register">注册账户</router-link>
         </div>
         <a-form-item>
           <a-button :loading="logging" style="width: 100%;margin-top: 24px" size="large" htmlType="submit"
             type="primary">登录</a-button>
         </a-form-item>
-        <div>
-          其他登录方式
-          <a-icon class="icon" type="qq" />
-          <a-icon class="icon" type="wechat" />
-          <a-icon class="icon" type="github" />
-          <router-link style="float: right" to="/register">注册账户</router-link>
-        </div>
       </a-form>
     </div>
   </common-layout>

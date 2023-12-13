@@ -9,14 +9,14 @@
                     {{ likes }}
                 </span>
             </span>
-            <span key="comment-basic-dislike">
+            <!-- <span key="comment-basic-dislike">
                 <a-tooltip title="Dislike">
                     <a-icon type="dislike" :theme="action === 'disliked' ? 'filled' : 'outlined'" @click="dislike" />
                 </a-tooltip>
                 <span style="padding-left: '8px';cursor: 'auto'">
                     {{ dislikes }}
                 </span>
-            </span>
+            </span> -->
             <span key="comment-basic-reply-to" @click="reply">Reply to</span>
         </template>
         <a slot="author">{{ author }}</a>
@@ -44,7 +44,7 @@ export default {
             avatar: this.data.avatar,
             content: this.data.content,
             likes: this.data.likes,
-            dislikes: 0,
+            // dislikes: 0,
             action: null,
             moment:this.data.moment,
             visible: false,
@@ -65,18 +65,18 @@ export default {
             }
             this.action = 'liked';
         },
-        dislike() {
-            if (this.action == 'disliked') {
-                this.dislikes = this.dislikes - 1;
-                this.action = null;
-                return;
-            }
-            this.dislikes = this.dislikes + 1;
-            if (this.action == 'liked') {
-                this.likes = this.likes - 1;
-            }
-            this.action = 'disliked';
-        },
+        // dislike() {
+        //     if (this.action == 'disliked') {
+        //         this.dislikes = this.dislikes - 1;
+        //         this.action = null;
+        //         return;
+        //     }
+        //     this.dislikes = this.dislikes + 1;
+        //     if (this.action == 'liked') {
+        //         this.likes = this.likes - 1;
+        //     }
+        //     this.action = 'disliked';
+        // },
         reply() {
             this.replyTitle = '回复' + this.author + ':'
             this.visible = true
