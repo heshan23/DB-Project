@@ -33,6 +33,10 @@ export async function editProfile(before_name, name, password) {
     "new_password": password
   })
 }
+
+export async function UploadAvator(file) {
+  return request(path.UPLOADAVATOR, METHOD.POST, file)
+}
 /* ----------------------------- 帖子部分 ------------------------- */
 
 export async function newPost(name, title, content, board, tags, image_ids) {

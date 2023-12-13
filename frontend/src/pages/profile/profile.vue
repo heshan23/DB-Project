@@ -95,10 +95,10 @@
 </template>
 
 <script>
-import { editProfile, logout, uploadImage } from '@/services/user'
+import { editProfile, logout } from '@/services/user'
 import { mapGetters } from 'vuex';
 // import { state } from '../../store/index'
-import { queryPost, deletePost } from '../../services/user';
+import { queryPost, deletePost, UploadAvator } from '../../services/user';
 
 export default {
     created() {
@@ -210,20 +210,12 @@ export default {
         customRequest(data) {
             //上传完文件还需要刷新一下
             const formData = new FormData();
-            formData.append('img', data.file);
-            uploadImage(formData).then((res) => {
-                let img = {
-                    uid: res.data.id,
-                    name: 'test.jpg',
-                    status: 'done',
-                    url: res.data.url,
-                }
-                this.fileList.push(img)
-                this.$message.success(res.data.reason)
-                /**
-                 * 使用 res.data.url 获取图片地址
-                 * 使用 res.data.id 获取图片id (用作查询图片的 url)
-                 */
+            formData.append('avator', data.file);
+            formData.append('user_name', this.user.user_name);
+            UploadAvator(formData).then(() => {
+                this.$message.success('修改成功！', 1)
+                logout()
+                this.$router.push('/login')
             }
             ).catch((err) => {
                 this.$message.error(err.response.code)
