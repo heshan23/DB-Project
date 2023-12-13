@@ -25,13 +25,20 @@ class NewComment(APIView):
             user = User.objects.get(user_name=username)
             post = Post.objects.get(id=post_id)
             be_call_user = post.user
-            notice = Notice.objects.create(
-                user=be_call_user,
-                content=str(username) + " 回复了你: " + str(post.title),
-                create_date=timezone.now(),
-                related_post=post
-            )
-            notice.save()
+            cur = ""
+            if len(content) > 10:
+                cur = "..."
+            if res_id is not None:
+                comment = Comment.objects.get(id=res_id)
+                be_call_user = comment.user
+            if user != be_call_user:
+                notice = Notice.objects.create(
+                    user=be_call_user,
+                    content=str(username) + " 回复了你: " + str(content[0:min(10, len(content))]) + cur,
+                    create_date=timezone.now(),
+                    related_post=post
+                )
+                notice.save()
             if res_id is not None:
                 comment = Comment.objects.create(
                     user=user,

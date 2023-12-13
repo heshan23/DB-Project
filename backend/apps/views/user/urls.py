@@ -23,6 +23,7 @@ urlpatterns = [
     path('UploadImage/', UploadImage.as_view()),
     path('GetImageUrl/', GetImageUrl.as_view()),
     path('UploadAvator/', UploadAvator.as_view()),
+    path('DeleteImage/', DeleteImage.as_view()),
     # 管理员功能
     path('RemoveUser/', RemoveUser.as_view())
 ]
