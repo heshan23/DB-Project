@@ -60,7 +60,7 @@ class hasLikeComment(APIView):
         try:
             comment_like = CommentLike.objects.get(user_id=user, comment=comment_id)
             return Response({"reason": "已经点赞", "data": True}, status=200)
-        except PostLike.DoesNotExist:
+        except CommentLike.DoesNotExist:
             return Response({"reason": "未点赞", "data": False}, status=200)
 
 
