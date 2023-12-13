@@ -43,6 +43,9 @@ class NewPost(APIView):
                 PostImage.objects.create(post_id=post.id, img=img)
         except Image.DoesNotExist:
             return Response({"reason": "图片不存在"}, status=404)
+        if len(image_ids) == 0:
+            img = Image.objects.get(id=1)
+            PostImage.objects.create(post_id=post.id, img=img)
         board = Board.objects.get(name=board_name)
         try:
             board_post = BoardPost.objects.create(post=post, board=board)
@@ -158,7 +161,7 @@ class PostGet(APIView):
 class QueryPost(APIView):
     def get(self, request):
         # 节约开销,首先假设这个是none
-        max_return_count = 10
+        max_return_count = 12
         final_post = None
         good_search = True
         username = request.GET["user_name"]
@@ -263,7 +266,7 @@ class QueryPost(APIView):
                 }
             )
         ret = sample(ret, min(max_return_count, len(ret)))
-        ret.sort(key=itemgetter("like_count"))
+        ret.sort(key=itemgetter("like_count"),reverse=True)
         return Response(
             {
                 "reason": "查询成功",
