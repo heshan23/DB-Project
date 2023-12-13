@@ -10,7 +10,7 @@ class Like(APIView):
             user_name = str(request.data["user_name"])
             post_id = str(request.data["post_id"])
         except KeyError:
-            return Response({"reason": "keyError,请检查发送的信息是否有user_id,post_id"},
+            return Response({"reason": "keyError,请检查发送的信息是否有user_name,post_id"},
                             status=422)
         try:
             user = User.objects.get(
@@ -28,10 +28,11 @@ class Like(APIView):
                 user=user,
                 post=post
             )
+            count = PostLike.objects.filter(post=post).count()
         except Exception as e:
             print(e)
             return Response({"reason": "已经点赞过了"}, status=500)
-        return Response({"reason": "点赞成功"}, status=200)
+        return Response({"reason": "点赞成功", "data": count}, status=200)
 
 
 class hasLike(APIView):
@@ -88,10 +89,11 @@ class UnLike(APIView):
                 user=user,
                 post=post
             ).delete()
+            count = PostLike.objects.filter(post=post).count()
         except Exception as e:
             print(e)
             return Response({"reason": "当前未点赞该帖子，无法撤销"}, status=500)
-        return Response({"reason": "取消点赞"}, status=200)
+        return Response({"reason": "取消点赞", "data": count}, status=200)
 
 
 class LikeComment(APIView):
@@ -119,10 +121,11 @@ class LikeComment(APIView):
                 user=user,
                 comment=comment
             )
+            count = CommentLike.objects.filter(comment=comment).count()
         except Exception as e:
             print(e)
             return Response({"reason": "已经点赞过了"}, status=500)
-        return Response({"reason": "点赞成功"}, status=200)
+        return Response({"reason": "点赞成功", "data": count}, status=200)
 
 
 class UnLikeComment(APIView):
@@ -149,7 +152,8 @@ class UnLikeComment(APIView):
                 user=user,
                 comment=comment
             ).delete()
+            count = CommentLike.objects.filter(comment=comment).count()
         except Exception as e:
             print(e)
             return Response({"reason": "当前未点赞该评论，无法撤销"}, status=500)
-        return Response({"reason": "取消点赞"}, status=200)
+        return Response({"reason": "取消点赞", "data": count}, status=200)
