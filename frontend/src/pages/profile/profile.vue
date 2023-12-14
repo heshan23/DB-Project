@@ -99,6 +99,7 @@ import { editProfile, logout } from '../../services/user'
 import { mapGetters } from 'vuex';
 // import { state } from '../../store/index'
 import { queryPost, deletePost, UploadAvator } from '../../services/user';
+// import { YourAccountMessage } from '../../services/user'
 import Vue from 'vue'
 export default {
     created() {
@@ -214,8 +215,16 @@ export default {
             const formData = new FormData();
             formData.append('avator', data.file);
             formData.append('user_name', this.user.user_name);
+            // let _this = this
             UploadAvator(formData).then(() => {
                 this.$message.success('修改成功！', 1)
+                // YourAccountMessage(this.user.user_name).then((res) => {
+                //     // _this.setUser(res.data.user)
+                //     this.$store.commit('account/setUser', res.data.user)
+                //     this.$data.user_name = this.user.user_name
+                //     this.$data.avatar = this.user.avatar
+                //     this.$data.email = this.user.email
+                // })
                 logout()
                 this.$router.push('/login')
             }

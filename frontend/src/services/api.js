@@ -5,6 +5,7 @@ const BASE_URL = process.env.VUE_APP_API_BASE_URL
 module.exports = {
   ROUTES: `${BASE_URL}/routes`,
 
+  YAM: `${BASE_URL}/User/YourAccountMessage/`,
   LOGIN: `${BASE_URL}/User/SignIn/`,
   REGISTER: `${BASE_URL}/User/SignUp/`,
   EDITPROFILE: `${BASE_URL}/User/EditProfile/`,
