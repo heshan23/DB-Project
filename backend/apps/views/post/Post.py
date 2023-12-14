@@ -6,8 +6,6 @@ from django.utils import timezone
 from apps.views.user.Account import *
 from apps.views.user.Images import image_url
 
-default_image = image_url + "/media/images/default_background1.jpg"
-
 default_images = [
     image_url + "/media/images/default_background1.jpg",
     image_url + "/media/images/default_background2.jpg",
@@ -31,39 +29,35 @@ class NewPost(APIView):
             )
         try:
             user = User.objects.get(user_name=username)
-            post = Post.objects.create(
-                user=user, title=title, content=content, create_date=timezone.now()
-            )
-            post.save()
         except User.DoesNotExist:
             return Response({"reason": "错误，用户名无效!!!"}, status=500)
         try:
             for iid in image_ids:
-                img = Image.objects.get(id=iid)
-                PostImage.objects.create(post_id=post.id, img=img)
+                Image.objects.get(id=iid)
         except Image.DoesNotExist:
             return Response({"reason": "图片不存在"}, status=404)
-        if len(image_ids) == 0:
-            img = Image.objects.get(id=1)
-            PostImage.objects.create(post_id=post.id, img=img)
-        board = Board.objects.get(name=board_name)
         try:
-            board_post = BoardPost.objects.create(post=post, board=board)
-            board_post.save()
-        except Exception as e:
-            print(e)
-            return Response({"reason": "board-未知错误，请联系管理员"}, status=500)
-        try:
-            for tag in tags:
-                try:
-                    real_tag = Tag.objects.get(name=tag)
-                except Tag.DoesNotExist:
-                    real_tag = Tag.objects.create(name=tag)
-                TagPost.objects.create(tag=real_tag, post=post)
-        except Exception as e:
-            print(e)
-            return Response({"reason": "tag-未知错误，请联系管理员"}, status=500)
+            board = Board.objects.get(name=board_name)
+        except Board.DoesNotExist:
+            return Response({"reason": "版块不存在"}, status=404)
         print(timezone.now())
+        post = Post.objects.create(
+            user=user, title=title, content=content, create_date=timezone.now()
+        )
+        post.save()
+        for iid in image_ids:
+            img = Image.objects.get(id=iid)
+            post_image = PostImage.objects.create(post_id=post.id, img=img)
+            post_image.save()
+        board_post = BoardPost.objects.create(post=post, board=board)
+        board_post.save()
+        for tag in tags:
+            try:
+                real_tag = Tag.objects.get(name=tag)
+            except Tag.DoesNotExist:
+                real_tag = Tag.objects.create(name=tag)
+            tag_post = TagPost.objects.create(tag=real_tag, post=post)
+            tag_post.save()
         return Response({"reason": "创建帖子成功"}, status=200)
 
 
@@ -91,7 +85,7 @@ class PostGet(APIView):
             for image in post_image:
                 images.append(image_url + image.img.img.url)
             if len(images) == 0:
-                images.append(default_image)
+                images.append(default_images[int(post_id) % 4])
             for tag in tag_post:
                 tags.append(tag.tag.name)
             if post.user.avatar is None:
@@ -233,7 +227,6 @@ class QueryPost(APIView):
                 final_post = set(Post.objects.filter().values_list("id", flat=True))
             else:
                 final_post = []
-        i = 0
         for post_id in final_post:
             like_count = PostLike.objects.filter(post_id=post_id).count()
             comment_count = Comment.objects.filter(post_id=post_id).count()
@@ -243,8 +236,7 @@ class QueryPost(APIView):
             for image in post_img:
                 images.append(image_url + image.img.img.url)
             if len(images) == 0:
-                image = default_images[i % 4]
-                i = i + 1
+                image = default_images[post_id % 4]
             else:
                 image = images[0]
             if post.user.avatar is None:
@@ -266,7 +258,7 @@ class QueryPost(APIView):
                 }
             )
         ret = sample(ret, min(max_return_count, len(ret)))
-        ret.sort(key=itemgetter("like_count"),reverse=True)
+        ret.sort(key=itemgetter("like_count"), reverse=True)
         return Response(
             {
                 "reason": "查询成功",
