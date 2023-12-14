@@ -99,7 +99,7 @@ import { editProfile, logout } from '../../services/user'
 import { mapGetters } from 'vuex';
 // import { state } from '../../store/index'
 import { queryPost, deletePost, UploadAvator } from '../../services/user';
-
+import Vue from 'vue'
 export default {
     created() {
         this.$data.user_name = this.user.user_name
@@ -237,13 +237,13 @@ export default {
                 content: '注意, 删除文章操作执行后不可撤销, 点击确认以执行删除操作!',
                 onOk() {
                     deletePost(name, data).then((res) => {
-                        this.success(res.data.reason, 1).then(() => {
+                        Vue.prototype.$message.success(res.data.reason, 1).then(() => {
                             location.reload()
                         })
                     }
                     ).catch(
                         (err) => {
-                            this.error(err.response.data.reason, 1)
+                            Vue.prototype.$message.error(err.response.data.reason, 1)
                         }
                     )
                     return new Promise((resolve, reject) => {

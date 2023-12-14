@@ -100,13 +100,13 @@ class PostGet(APIView):
                     if len(res.content) > 10:
                         cut = "....."
                     append = (
-                            append
-                            + "@"
-                            + str(res.user.user_name)
-                            + "的评论: \""
-                            + str(res.content[0: min(10, len(res.content))]
-                                  + str(cut) + "\""
-                                  )
+                        append
+                        + "@"
+                        + str(res.user.user_name)
+                        + '的评论: "'
+                        + str(
+                            res.content[0 : min(10, len(res.content))] + str(cut) + '"'
+                        )
                     )
                 com_like_count = CommentLike.objects.filter(comment=comment).count()
                 if comment.user.avatar is None:
@@ -123,7 +123,7 @@ class PostGet(APIView):
                         "content": comment.content,
                         "reply": str(append),
                         "avatar": coa,
-                        "likes": com_like_count
+                        "likes": com_like_count,
                     }
                 )
         except Exception as e:
@@ -234,6 +234,7 @@ class QueryPost(APIView):
             post_img = PostImage.objects.filter(post_id=post_id)
             images = []
             for image in post_img:
+                print(image)
                 images.append(image_url + image.img.img.url)
             if len(images) == 0:
                 image = default_images[post_id % 4]
@@ -290,8 +291,8 @@ class DeletePost(APIView):
     def post(self, request):
         try:
             print(request.data)
-            post_id = request.data['post_id']
-            user_name = request.data['user_name']
+            post_id = request.data["post_id"]
+            user_name = request.data["user_name"]
         except KeyError:
             return Response({"reason": "检查是否提供了user_name和post_id"}, status=422)
         try:
