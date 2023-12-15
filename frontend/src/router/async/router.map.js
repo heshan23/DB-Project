@@ -76,35 +76,30 @@ const routerMap = {
     path: '/article',
     component: () => import('@/pages/article')
   },
-  board1:{
-    path:'/board1',
-    name:'休闲娱乐',
+  board1: {
+    path: '/board1',
+    name: '休闲娱乐',
     component: () => import('@/pages/board1')
   },
-  board2:{
-    path:'/board2',
-    name:'信息科技',
+  board2: {
+    path: '/board2',
+    name: '信息科技',
     component: () => import('@/pages/board2')
   },
-  board3:{
-    path:'/board3',
-    name:'生活时尚',
+  board3: {
+    path: '/board3',
+    name: '生活时尚',
     component: () => import('@/pages/board3')
   },
-  board4:{
-    path:'/board4',
-    name:'课程交流',
+  board4: {
+    path: '/board4',
+    name: '课程交流',
     component: () => import('@/pages/board4')
   },
-  board5:{
-    path:'/board5',
-    name:'原神天地',
-    component: () => import('@/pages/board5')
-  },
-  find_article:{
-    path:'/find_article',
-    name:'查询文章',
-    component:()=>import('@/pages/find_article')
+  find_article: {
+    path: '/find_article',
+    name: '查询文章',
+    component: () => import('@/pages/find_article')
   }
 }
 export default routerMap

@@ -23,9 +23,6 @@
                             <a-radio-button value="课程交流">
                                 课程交流
                             </a-radio-button>
-                            <a-radio-button value="原神天地">
-                                原神天地
-                            </a-radio-button>
                         </a-radio-group>
                     </div>
                     <a-textarea placeholder="请输入正文" v-model="content" :auto-size="{ minRows: 12, maxRows: 20 }"

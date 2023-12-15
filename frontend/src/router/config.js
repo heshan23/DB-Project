@@ -45,7 +45,6 @@ const options = {
             'board2',
             'board3',
             'board4',
-            'board5'
           ]
         },
         {
