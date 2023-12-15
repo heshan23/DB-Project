@@ -13,7 +13,6 @@ Mock.mock(`${process.env.VUE_APP_API_BASE_URL}/routes`, 'get', () => {
           'board2',
           'board3',
           'board4',
-          'board5'
         ]
       },
       {
