@@ -90,7 +90,7 @@ queryPost().then(res => {
                 { type: 'star-o', text: dataArray[i].star_count },
                 { type: 'message', text: dataArray[i].comment_count },
             ],
-            content: dataArray[i].content,
+            content: dataArray[i].content.substr(0, 210),
             post_id: dataArray[i].post_id
         })
     }
