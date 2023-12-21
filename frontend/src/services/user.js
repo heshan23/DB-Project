@@ -1,6 +1,13 @@
 import * as path from '@/services/api'
 import { request, METHOD, removeAuthorization } from '@/utils/request'
 
+
+export async function YourAccountMessage(user_name) {
+  return request(path.YAM, METHOD.GET, {
+    "user_name": user_name
+  })
+}
+
 /**
  * 登录服务
  * @param name 账户名
@@ -204,6 +211,7 @@ export function logout() {
   removeAuthorization()
 }
 export default {
+  YourAccountMessage,
   login,
   logout,
   getRoutesConfig,

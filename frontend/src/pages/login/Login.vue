@@ -6,7 +6,7 @@
         <img alt="logo" class="logo" src="@/assets/img/logo.png" />
         <span class="title">航Happen信息交流平台</span>
       </div>
-      <div class="desc">航Happen 是北航最具影响力的信息交流平台</div>
+      <div class="desc">你所关心的，都在航Happen</div>
     </div>
     <div class="login">
       <a-form @submit="onSubmit" :form="form">

@@ -73,7 +73,7 @@ class EditProfile(APIView):
             before_name = request.data["before_name"]
             new_name = request.data["new_name"]
             new_password = request.data["new_password"]
-            old_password = request.data['old_password']
+            old_password = request.data["old_password"]
         except KeyError:
             return Response({"reason": "keyError,请检查发送的信息"}, status=422)
         if check_user_name_exist(new_name):
@@ -111,7 +111,7 @@ class YourAccountMessage(APIView):
                 avatar = image_url + user.avatar.img.url
             ret_data = {
                 "user_name": user.user_name,
-                "user_email": user.email,
+                "email": user.email,
                 "avatar": avatar,
             }
         except User.DoesNotExist:
@@ -137,10 +137,8 @@ class UploadAvator(APIView):
             user = User.objects.get(user_name=user_name)
         except User.DoesNotExist:
             return Response({"reason": "错误,该用户不存在"}, status=404)
-        file_obj = request.FILES.get('avator')
-        img = Image.objects.create(
-            img=file_obj
-        )
+        file_obj = request.FILES.get("avator")
+        img = Image.objects.create(img=file_obj)
         img.save()
         try:
             user.avatar = img
@@ -148,4 +146,6 @@ class UploadAvator(APIView):
         except Exception as e:
             print(e)
             return Response({"reason": str(e)}, status=500)
-        return Response({"reason": "成功修改", "avator": image_url + img.img.url}, status=200)
+        return Response(
+            {"reason": "成功修改", "avator": image_url + img.img.url}, status=200
+        )

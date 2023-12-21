@@ -39,7 +39,7 @@
                         </template>
                     </div>
                     <a-form-item style="width: 100px;">
-                        <a-button :loading="logging" style="width: 100%;margin-top: 24px" size="large" htmlType="submit"
+                        <a-button style="width: 100%;margin-top: 24px" size="large" htmlType="submit"
                             type="primary">查询</a-button>
                     </a-form-item>
                 </a-form>
@@ -75,34 +75,35 @@
 </template>
 <script>
 import { queryPost } from '../../services/user';
-var contents = []
-queryPost().then(res => {
-    console.log(res.data)
-    const dataArray = res.data.contents
-    for (let i = 0, len = dataArray.length; i < len; i++) {
-        contents.push({
-            title: dataArray[i].title,
-            avatar: dataArray[i].avatar,
-            picture: dataArray[i].picture,
-            writer: dataArray[i].writer,
-            actions: [
-                { type: 'like-o', text: dataArray[i].like_count },
-                { type: 'star-o', text: dataArray[i].star_count },
-                { type: 'message', text: dataArray[i].comment_count },
-            ],
-            content: dataArray[i].content.substr(0, 210),
-            post_id: dataArray[i].post_id
-        })
-    }
-}).catch(err => {
-    console.log(err)
-    this.error("请求失败, 请尝试刷新页面", 1);
-})
 export default {
+    created() {
+        queryPost().then(res => {
+            console.log(res.data)
+            const dataArray = res.data.contents
+            for (let i = 0, len = dataArray.length; i < len; i++) {
+                this.$data.contents.push({
+                    title: dataArray[i].title,
+                    avatar: dataArray[i].avatar,
+                    picture: dataArray[i].picture,
+                    writer: dataArray[i].writer,
+                    actions: [
+                        { type: 'like-o', text: dataArray[i].like_count },
+                        { type: 'star-o', text: dataArray[i].star_count },
+                        { type: 'message', text: dataArray[i].comment_count },
+                    ],
+                    content: dataArray[i].content.substr(0, 210),
+                    post_id: dataArray[i].post_id
+                })
+            }
+        }).catch(err => {
+            console.log(err)
+            this.error("请求失败, 请尝试刷新页面", 1);
+        })
+    },
     data() {
         return {
             form: this.$form.createForm(this),
-            contents,
+            contents: [],
             value: '不限',
             tags: ['学习交流', '美食分享', '生活经验', '物品交换'],
             selectedTags: [],
@@ -121,7 +122,8 @@ export default {
         }
     },
     methods: {
-        onSubmit() {
+        onSubmit(e) {
+            e.preventDefault();
             const title = this.form.getFieldValue('title')
             var block_name = this.value
             if (block_name == '不限') {
